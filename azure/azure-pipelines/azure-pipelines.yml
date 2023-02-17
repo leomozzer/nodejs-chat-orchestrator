@@ -29,4 +29,3 @@ stages:
             workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
             serviceConnection: 'SC-AzureDevOps'
             webAppName: 'sampleapp-lso1234'
-            packageFile: $(Pipeline.Workspace)/drop/$(Build.BuildId)
