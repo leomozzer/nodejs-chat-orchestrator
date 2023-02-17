@@ -27,7 +27,7 @@ stages:
         - template: ../../pipeline-templates/steps/app-service-build.yaml
           parameters:
             workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
-            packageFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)
+
     - job: deploy_dev
       displayName: Deploy dev
       steps:
