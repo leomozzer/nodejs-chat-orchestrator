@@ -12,22 +12,22 @@ import { Users } from './users/users.entity';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [
-    ChatModule,
-    RoomsModule,
-    UsersModule,
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.MYSQL_HOST,
-      port: 3306,
-      username: 'root',
-      password: process.env.MYSQL_ROOT_PASSWORD,
-      database: process.env.MYSQL_DATABASE,
-      entities: [Rooms, Users, Chat, Messages],
-      synchronize: true,
-    })
-  ],
+  // imports: [
+  //   ChatModule,
+  //   RoomsModule,
+  //   UsersModule,
+  //   ConfigModule.forRoot(),
+  //   TypeOrmModule.forRoot({
+  //     type: 'mysql',
+  //     host: process.env.MYSQL_HOST,
+  //     port: 3306,
+  //     username: 'root',
+  //     password: process.env.MYSQL_ROOT_PASSWORD,
+  //     database: process.env.MYSQL_DATABASE,
+  //     entities: [Rooms, Users, Chat, Messages],
+  //     synchronize: true,
+  //   })
+  // ],
   controllers: [AppController],
   providers: [AppService],
 })
