@@ -15,5 +15,5 @@ steps:
       azureSubscription: ${{parameters.serviceConnection}}
       appType: webAppLinux
       appName: ${{parameters.webAppName}}
-      package: ${{parameters.packageFile}}.zip
+      package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
       startUpCommand: 'pm2 start dist/main.js --no-daemon'
