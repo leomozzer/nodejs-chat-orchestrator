@@ -2,9 +2,6 @@ parameters:
   - name: workingDirectory
     type: string
 
-variables:
-  workingDirectory: ${{parameters.workingDirectory}}
-
 steps:
   - task: NodeTool@0
     inputs:
