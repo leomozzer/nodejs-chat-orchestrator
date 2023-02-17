@@ -1,0 +1,43 @@
+parameters:
+  - name: terraformVersion
+    type: string
+  - name: projectName
+    type: string
+  - name: workingDirectory
+    type: string
+  - name: environments
+    type: object
+
+variables:
+  terraformVersion: ${{parameters.terraformVersion}}
+  projectName: ${{parameters.projectName}}
+  workingDirectory: ${{parameters.workingDirectory}}
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+stages:
+  - stage: plan
+    displayName: Plan
+    jobs:
+      - ${{each environment in parameters.environments}}:
+          - job: plan_${{environment.stage}}
+            displayName: Plan ${{environment.stage}}
+            steps:
+              - template: steps/terraform-plan.yaml
+                parameters:
+                  environment: ${{environment}}
+
+  - ${{each environment in parameters.environments}}:
+      - stage: apply_${{environment.stage}}
+        condition: and(succeeded('plan'), eq(variables.isMain, 'true'))
+        dependsOn: plan
+        displayName: Apply ${{environment.stage}}
+        jobs:
+          - deployment:
+            environment: ${{environment.environment}}
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - template: steps/terraform-apply.yaml
+                      parameters:
+                        environment: ${{environment}}
