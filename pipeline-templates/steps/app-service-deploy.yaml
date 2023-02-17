@@ -6,15 +6,12 @@ parameters:
   - name: webAppName
     type: string
 
-variables:
-  workingDirectory: ${{parameters.workingDirectory}}
-
 steps:
-  task: AzureWebApp@1
-  displayName: 'Azure Web App Deploy: sitename'
-  inputs:
-    azureSubscription: ${{parameters.serviceConnection}}
-    appType: webAppLinux
-    appName: ${{parameters.webAppName}}
-    package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-    startUpCommand: 'pm2 start dist/main.js --no-daemon'
+  - task: AzureWebApp@1
+    displayName: 'Azure Web App Deploy: sitename'
+    inputs:
+      azureSubscription: ${{parameters.serviceConnection}}
+      appType: webAppLinux
+      appName: ${{parameters.webAppName}}
+      package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+      startUpCommand: 'pm2 start dist/main.js --no-daemon'
