@@ -25,3 +25,11 @@ stages:
       displayName: Build dev
       steps:
         - template: ../../pipeline-templates/steps/app-service-build.yaml
+          parameters:
+            workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
+        
+        - template: ../../pipeline-templates/steps/app-service-deploy.yaml
+          parameters:
+            workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
+            serviceConnection: 'SC-AzureDevOps'
+            webAppName: 'sampleapp-lso1234'
