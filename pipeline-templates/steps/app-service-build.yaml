@@ -24,6 +24,8 @@ steps:
       archiveType: zip
       archiveFile: ${{parameters.packageFile}}.zip
       replaceExistingArchive: true
-  
-  - upload: ${{parameters.packageFile}}.zip
-    artifact: drop
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
