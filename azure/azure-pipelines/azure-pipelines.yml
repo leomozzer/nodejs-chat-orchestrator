@@ -7,10 +7,10 @@
     azureSubscription: 'SC-AzureDevOps'
 
     # Web app name
-    webAppName: 'sampleapp'
+    webAppName: 'sampleapp-lso1234'
 
     # Environment name
-    environmentName: 'sampleapp'
+    environmentName: 'dev'
 
     # Agent VM image name
     vmImageName: 'ubuntu-latest'
