@@ -61,13 +61,22 @@ export class MessagesModule { }
 
 - Frontend
 - Terraform
+    - App Service backend
+    - Application Gateway
+    - MySql DB
 - Pipeline
+    - Deploying backend to App Service
+
+# Notes
+- Linux App Service doesn't support WebSockets, but it seems that Application Gateways does. 
 
 
 ## Issues
 - When reloading the same page we got `sqlMessage: "Duplicate entry 'Fo-SvjSftYkYx8O7AAAH' for key 'PRIMARY'",`
 
 ## Documentation
+
+[Overview of WebSocket support in Application Gateway](https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-websocket)
 
 [NestJS + Serverless + Lambda + AWS — In shortest steps](https://nishabe.medium.com/nestjs-serverless-lambda-aws-in-shortest-steps-e914300faed5)
 
