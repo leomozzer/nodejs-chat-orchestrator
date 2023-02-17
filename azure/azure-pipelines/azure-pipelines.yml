@@ -19,11 +19,11 @@ stages:
     displayName: Build stage
     jobs:
     - job: Build
-        displayName: Build
-        pool:
+      displayName: Build
+      pool:
         vmImage: $(vmImageName)
 
-        steps:
+      steps:
         - task: NodeTool@0
         inputs:
             versionSpec: '16.x'
@@ -32,12 +32,12 @@ stages:
         - script: |
             npm install
             npm run build --if-present
-        displayName: 'npm install, build'
-        workingDirectory: ${{parameters.workingDirectory}}
+          displayName: 'npm install, build'
+          workingDirectory: ${{parameters.workingDirectory}}
 
         - task: ArchiveFiles@2
-        displayName: 'Archive files'
-        inputs:
+          displayName: 'Archive files'
+          inputs:
             rootFolderOrFile: '$(System.DefaultWorkingDirectory)/backend'
             includeRootFolder: false
             archiveType: zip
@@ -45,9 +45,9 @@ stages:
             replaceExistingArchive: true
 
         - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        artifact: drop
+          artifact: drop
 
-    - stage: Deploy
+  - stage: Deploy
     displayName: Deploy stage
     dependsOn: Build
     condition: succeeded()
@@ -56,16 +56,16 @@ stages:
         displayName: Deploy
         environment: $(environmentName)
         pool:
-        vmImage: $(vmImageName)
+          vmImage: $(vmImageName)
         strategy:
-        runOnce:
+          runOnce:
             deploy:
-            steps:
-            - task: AzureWebApp@1
+              steps:
+              - task: AzureWebApp@1
                 displayName: 'Azure Web App Deploy: sitename'
                 inputs:
-                azureSubscription: $(azureSubscription)
-                appType: webAppLinux
-                appName: $(webAppName)
-                package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-                startUpCommand: 'pm2 start dist/main.js --no-daemon'
+                  azureSubscription: $(azureSubscription)
+                  appType: webAppLinux
+                  appName: $(webAppName)
+                  package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+                  startUpCommand: 'pm2 start dist/main.js --no-daemon'
