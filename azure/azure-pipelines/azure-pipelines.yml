@@ -1,5 +1,5 @@
 trigger:
-    - main
+    - master
 
 variables:
     # Azure Resource Manager connection created during pipeline creation
@@ -31,5 +31,5 @@ stages:
         - template: ../../pipeline-templates/steps/app-service-deploy.yaml
           parameters:
             workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
-            serviceConnection: 'lso-environment'
-            webAppName: 'sampleapp-lso1234'
+            serviceConnection: 'SC-AzureDevOps'
+            webAppName: 'ASP-sampleapp-bb29'
