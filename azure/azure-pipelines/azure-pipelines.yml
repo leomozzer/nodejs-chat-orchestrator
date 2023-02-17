@@ -31,5 +31,5 @@ stages:
         - template: ../../pipeline-templates/steps/app-service-deploy.yaml
           parameters:
             workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
-            serviceConnection: 'SC-AzureDevOps'
+            serviceConnection: '955daeae-7823-41f8-a648-a19777bcb4ef'
             webAppName: 'sampleapp-lso1234'
