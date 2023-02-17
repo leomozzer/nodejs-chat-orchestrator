@@ -1,22 +1,21 @@
-  trigger:
+trigger:
     - master
 
-    variables:
-
+variables:
     # Azure Resource Manager connection created during pipeline creation
-    azureSubscription: 'SC-AzureDevOps'
+  azureSubscription: 'SC-AzureDevOps'
 
     # Web app name
-    webAppName: 'sampleapp-lso1234'
+  webAppName: 'sampleapp-lso1234'
 
     # Environment name
-    environmentName: 'dev'
+  environmentName: 'dev'
 
     # Agent VM image name
-    vmImageName: 'ubuntu-latest'
+  vmImageName: 'ubuntu-latest'
 
-    stages:
-    - stage: Build
+stages:
+  - stage: Build
     displayName: Build stage
     jobs:
     - job: Build
