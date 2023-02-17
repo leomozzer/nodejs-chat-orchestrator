@@ -5,6 +5,8 @@ parameters:
     type: string
   - name: webAppName
     type: string
+  - name: packageFile
+    type: string
 
 steps:
   - task: AzureWebApp@1
@@ -13,5 +15,5 @@ steps:
       azureSubscription: ${{parameters.serviceConnection}}
       appType: webAppLinux
       appName: ${{parameters.webAppName}}
-      package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+      package: ${{parameters.packageFile}}.zip
       startUpCommand: 'pm2 start dist/main.js --no-daemon'

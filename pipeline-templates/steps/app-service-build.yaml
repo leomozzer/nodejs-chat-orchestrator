@@ -1,6 +1,8 @@
 parameters:
   - name: workingDirectory
     type: string
+  - name: packageFile
+    type: string
 
 steps:
   - task: NodeTool@0
@@ -20,8 +22,8 @@ steps:
       rootFolderOrFile: ${{parameters.workingDirectory}}
       includeRootFolder: false
       archiveType: zip
-      archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      archiveFile: ${{parameters.packageFile}}.zip
       replaceExistingArchive: true
   
-  - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  - upload: ${{parameters.packageFile}}.zip
     artifact: drop
