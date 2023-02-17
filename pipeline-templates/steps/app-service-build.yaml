@@ -1,6 +1,11 @@
 parameters:
   - name: workingDirectory
     type: string
+  - name: serviceConnection
+    type: string
+  - name: webAppName
+    type: string
+    
   
 steps:
   - task: NodeTool@0
@@ -23,5 +28,11 @@ steps:
       archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       replaceExistingArchive: true
   
-  - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-    artifact: drop
+  - task: AzureWebApp@1
+    displayName: 'Azure Web App Deploy: sitename'
+    inputs:
+      azureSubscription: ${{parameters.serviceConnection}}
+      appType: webAppLinux
+      appName: ${{parameters.webAppName}}
+      package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      startUpCommand: 'pm2 start dist/main.js --no-daemon'
