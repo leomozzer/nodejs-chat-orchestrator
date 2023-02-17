@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sockets test</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div id="v-app">
+        <h1>{{title}}</h1>
+        <form>
+            <input v-model="text" type="text" />
+            <button type="submit" @click.prevent="sendMessage()">Send</button>
+        </form>
+        <p>
+        <ul>
+            <li v-for="msg of messages">{{msg}}</li>
+        </ul>
+        </p>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#v-app',
+            data: {
+                title: 'Websocket tester',
+                text: '',
+                id: '',
+                messages: [],
+                socket: null
+            },
+            methods: {
+                sendMessage() {
+                    this.messages.push(`You - ${this.text}`);
+                    this.socket.emit('newMessage', {
+                        'text': this.text,
+                        'origin': 'chat',
+                        'id': this.id,
+                        'room': this.room
+                    })
+                    this.text = "";
+                }
+            },
+            created() {
+                this.socket = io(`http://localhost:3000/rooms`)
+                //this.socket.of('/chat')
+                this.socket.on('response', (msg) => {
+                    console.log(`output => ${msg}`)
+                    this.messages.push(msg)
+                })
+                this.socket.on('connected', (msg) => {
+                    this.id = msg['id']
+                    this.room = msg['room']
+                    console.log(msg)
+                })
+                this.socket.on('New Message', msg => {
+                    if (msg['id'] !== this.id) {
+                        console.log(msg)
+                        this.messages.push(`${msg['id']} - ${msg['text']}`)
+                    }
+                })
+                this.socket.on('New user', msg => {
+                    console.log(msg)
+                    if (msg['id'] !== this.id) {
+                        this.messages.push(`User ${msg['id']} joined in the chat`)
+                    }
+                })
+                this.socket.on('User left', msg => {
+                    console.log(msg)
+                    if (msg['id'] !== this.id) {
+                        this.messages.push(`User ${msg['id']} left the chat`)
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

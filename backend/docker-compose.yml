@@ -1,0 +1,17 @@
+version : '3'
+services:
+  api:
+    image: backend
+    container_name: backend
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      # args:
+      #   - MYSQL_HOST=${MYSQL_HOST}
+    volumes:
+       - "./backend:/home/node/app"
+    ports:
+       - 9001:9001
+    restart: "always"
+    # environment:
+    #   MYSQL_HOST: ${MYSQL_HOST}
