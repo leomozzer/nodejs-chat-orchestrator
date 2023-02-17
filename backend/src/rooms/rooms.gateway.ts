@@ -16,33 +16,33 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     server: Server;
     async handleConnection(client: Socket) {
         console.log(`Client ${client.id} connected on /rooms`)
-        const checkRooms = await this.roomsService.AvailableRooms()
+        // const checkRooms = await this.roomsService.AvailableRooms()
         let roomId = ''
-        if (checkRooms.length === 0) {
-            roomId = uuidv4()
-            await this.roomsService.NewRoom(roomId)
-        }
-        roomId = checkRooms.length > 0 ? checkRooms[0]['id'] : roomId
-        await this.usersService.AddUserToRoom(roomId, client.id)
+        // if (checkRooms.length === 0) {
+        //     roomId = uuidv4()
+        //     await this.roomsService.NewRoom(roomId)
+        // }
+        // roomId = checkRooms.length > 0 ? checkRooms[0]['id'] : roomId
+        // await this.usersService.AddUserToRoom(roomId, client.id)
         client.emit('connected', { 'id': client.id, 'room': roomId })
         return this.server.emit('New user', { id: client.id })
     }
 
     async handleDisconnect(client: Socket) {
         console.log(`Client ${client.id} disconneted of /rooms`)
-        await this.usersService.DisableUser(client.id)
-        const chatDetails = await this.roomsService.CountAvailableUsersOnRoom(client.id)
-        if (chatDetails['activeUser'] === 0) {
-            await this.roomsService.DisableRoom(chatDetails['chatId'])
-        }
+        // await this.usersService.DisableUser(client.id)
+        // const chatDetails = await this.roomsService.CountAvailableUsersOnRoom(client.id)
+        // if (chatDetails['activeUser'] === 0) {
+        //     await this.roomsService.DisableRoom(chatDetails['chatId'])
+        // }
         return this.server.emit('User left', { id: client.id })
     }
 
     @SubscribeMessage('newMessage')
     async handleMessage(@MessageBody() body: any) {
         const { room, text, id } = body
-        await this.messageService.NewMessage(room, text, id)
-        await this.roomsService.UpdateRoomHistory(room)
+        // await this.messageService.NewMessage(room, text, id)
+        // await this.roomsService.UpdateRoomHistory(room)
         return this.server.emit('New Message', { 'text': text, 'id': id })
     }
 }
