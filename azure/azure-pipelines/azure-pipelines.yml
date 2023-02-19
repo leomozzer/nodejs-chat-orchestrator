@@ -3,31 +3,31 @@ trigger:
     include:
       - backend/src*
 
-variables:
-    # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'SC-AzureDevOps'
-
-    # Web app name
-  webAppName: 'sampleapp-lso1234'
-
-    # Environment name
-  environmentName: 'dev'
-
-    # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
 pool:
   vmImage: ubuntu-latest
 
-stages:
-  - stage: build
-    displayName: Build
-    jobs:
-    - job: build_dev
-      displayName: Build dev
-      steps:
-        - template: ../../pipeline-templates/steps/app-service-build.yaml
-          parameters:
-            workingDirectory: '$(System.DefaultWorkingDirectory)/backend'
-            serviceConnection: 'SC-AzureDevOps'
-            webAppName: 'sampleapp-lso1234'
+extends:
+  template: ../../pipeline-templates/environment-deploy.yaml
+  parameters:
+    terraformVersion: "1.3.6"
+    projectName: backend
+    workingDirectory: backend
+    environments:
+      - stage: dev
+        environment: backend-dev
+        serviceConnection: SC-AzureDevOps
+        resourceGroup: s-weu-dev-sample-project-rg
+        resourceGroupLocation: westeurope
+        storageAccount: sweudevsampleprojectsatf
+# stages:
+#   - stage: build
+#     displayName: Build
+#     jobs:
+#       - job: build_dev
+#         displayName: Build dev
+#         steps:
+#           - template: ../../pipeline-templates/steps/app-service-build.yaml
+#             parameters:
+#               workingDirectory: "$(System.DefaultWorkingDirectory)/backend"
+#               serviceConnection: "SC-AzureDevOps"
+#               webAppName: "sampleapp-lso1234"
