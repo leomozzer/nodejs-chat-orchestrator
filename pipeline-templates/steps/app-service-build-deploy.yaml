@@ -4,9 +4,9 @@ parameters:
 
 steps:
   - script: |
-      ls -ltr
+      pwd
     displayName: "Dummy script"
-    workingDirectory: ${{parameters.environment.appFolder}}
+    workingDirectory: $(workingDirectory)
 
   - script: |
       echo ${{parameters.environment.serviceConnection}}
