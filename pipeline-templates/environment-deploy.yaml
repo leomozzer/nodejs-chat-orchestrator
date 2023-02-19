@@ -26,24 +26,6 @@ stages:
                   ls -ltr
                 displayName: "Dummy script"
                 workingDirectory: ${{parameters.workingDirectory}}
-              # - template: steps/terraform-plan.yaml
-              #   parameters:
-              #     environment: ${{environment}}
-#   - ${{each environment in parameters.environments}}:
-#       - stage: apply_${{environment.stage}}
-#         condition: and(succeeded('plan'), eq(variables.isMain, 'true'))
-#         dependsOn: plan
-#         displayName: Apply ${{environment.stage}}
-#         jobs:
-#           - deployment:
-#             environment: ${{environment.environment}}
-#             strategy:
-#               runOnce:
-#                 deploy:
-#                   steps:
-#                     - template: steps/terraform-apply.yaml
-#                       parameters:
-#                         environment: ${{environment}}
 
 - ${{each environment in parameters.environments}}:
     - stage: app_service_${{environment.stage}}
