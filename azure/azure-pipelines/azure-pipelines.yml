@@ -14,7 +14,7 @@ extends:
     workingDirectory: $(System.DefaultWorkingDirectory)
     environments:
       - stage: dev
-        workingDirectory: "$(System.DefaultWorkingDirectory)/backend"
+        workingDirectory: "$(System.DefaultWorkingDirectory)"
         serviceConnection: SC-AzureDevOps
         webAppName: "sampleapp-lso1234"
         environment: dev
