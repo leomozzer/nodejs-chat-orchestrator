@@ -6,33 +6,38 @@ steps:
   - script: |
       ls -ltr
     displayName: "Dummy script"
-    workingDirectory: $(workingDirectory)
-
-  - task: NodeTool@0
-    inputs:
-      versionSpec: "18.x"
-    displayName: "Install Node.js"
+    workingDirectory: ${{parameters.environment.workingDirectory}}
 
   - script: |
-      npm install
-      npm run build --if-present
-    displayName: "npm install, build"
-    workingDirectory: $(workingDirectory)
+      echo ${{parameters.environment.serviceConnection}}
+    displayName: "Dummy script 2"
+    workingDirectory: ${{parameters.environment.workingDirectory}}
 
-  - task: ArchiveFiles@2
-    displayName: "Archive files"
-    inputs:
-      rootFolderOrFile: $(workingDirectory)
-      includeRootFolder: false
-      archiveType: zip
-      archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      replaceExistingArchive: true
+  # - task: NodeTool@0
+  #   inputs:
+  #     versionSpec: "18.x"
+  #   displayName: "Install Node.js"
 
-  - task: AzureWebApp@1
-    displayName: "Azure Web App Deploy: sitename"
-    inputs:
-      azureSubscription: ${{parameters.environment.serviceConnection}}
-      appType: webAppLinux
-      appName: ${{parameters.environment.webAppName}}
-      package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      startUpCommand: "pm2 start dist/main.js --no-daemon"
+  # - script: |
+  #     npm install
+  #     npm run build --if-present
+  #   displayName: "npm install, build"
+  #   workingDirectory: $(workingDirectory)
+
+  # - task: ArchiveFiles@2
+  #   displayName: "Archive files"
+  #   inputs:
+  #     rootFolderOrFile: $(workingDirectory)
+  #     includeRootFolder: false
+  #     archiveType: zip
+  #     archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  #     replaceExistingArchive: true
+
+  # - task: AzureWebApp@1
+  #   displayName: "Azure Web App Deploy: sitename"
+  #   inputs:
+  #     azureSubscription: ${{parameters.environment.serviceConnection}}
+  #     appType: webAppLinux
+  #     appName: ${{parameters.environment.webAppName}}
+  #     package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+  #     startUpCommand: "pm2 start dist/main.js --no-daemon"
