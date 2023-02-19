@@ -4,9 +4,9 @@ parameters:
 
 steps:
   - script: |
-      pwd
+      ls -ltr
     displayName: "Dummy script"
-    workingDirectory: $(workingDirectory)
+    workingDirectory: $(System.DefaultWorkingDirectory)
 
   - script: |
       echo ${{parameters.environment.serviceConnection}}
