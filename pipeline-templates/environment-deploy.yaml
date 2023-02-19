@@ -46,9 +46,9 @@ stages:
           - job: build_${{environment.stage}}
             displayName: Build ${{environment.stage}}
             steps:
-            - template: steps/app-service-build-deploy.yaml
-                  parameters:
-                    environment: ${{environment}}
+              - template: steps/app-service-build-deploy.yaml
+                parameters:
+                  environment: ${{environment}}
           # - deployment:
           #   environment: ${{environment.environment}}
           #   strategy:
