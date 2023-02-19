@@ -6,7 +6,6 @@ steps:
   - script: |
       ls -ltr
     displayName: "Dummy script"
-    workingDirectory: $(workingDirectory)
 
   - script: |
       echo ${{parameters.environment.serviceConnection}}
