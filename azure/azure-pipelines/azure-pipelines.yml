@@ -11,7 +11,7 @@ extends:
   parameters:
     terraformVersion: "1.3.6"
     projectName: backend
-    workingDirectory: $(System.DefaultWorkingDirectory)
+    workingDirectory: backend
     environments:
       - stage: dev
         workingDirectory: "$(System.DefaultWorkingDirectory)"
