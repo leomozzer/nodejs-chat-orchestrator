@@ -4,17 +4,16 @@ parameters:
 
 steps:
   - script: |
-      ls -ltr
-    displayName: "Dummy script 1"
-    workingDirectory: $(workingDirectory)/backend
-
-  - script: |
       echo ${{parameters.environment.serviceConnection}}
       echo $(terraformVersion)
-      echo $(workingDirectory)
-      echo ${{parameters.environment.appFolder}}
-      echo ${{parameters.environment.workingDirectory}}
+      echo $(terraformFolder)
+      echo $(backendAppFolder)
+    displayName: "Dummy script 1"
+
+  - script: |
+      ls -ltr
     displayName: "Dummy script 2"
+    workingDirectory: $(backendAppFolder)
 
   # - task: NodeTool@0
   #   inputs:

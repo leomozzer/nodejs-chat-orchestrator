@@ -3,7 +3,9 @@ parameters:
     type: string
   - name: projectName
     type: string
-  - name: workingDirectory
+  - name: backendAppFolder
+    type: string
+  - name: terraformFolder
     type: string
   - name: environments
     type: object
@@ -11,7 +13,8 @@ parameters:
 variables:
   terraformVersion: ${{parameters.terraformVersion}}
   projectName: ${{parameters.projectName}}
-  workingDirectory: ${{parameters.workingDirectory}}
+  backendAppFolder: ${{parameters.backendAppFolder}}
+  terraformFolder: ${{parameters.terraformFolder}}
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
 
 stages:
