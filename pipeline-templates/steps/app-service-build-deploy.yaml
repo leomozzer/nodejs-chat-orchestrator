@@ -10,6 +10,8 @@ steps:
 
   - script: |
       echo ${{parameters.environment.serviceConnection}}
+      echo $(terraformVersion)
+      echo $(workingDirectory)
     displayName: "Dummy script 2"
     workingDirectory: ${{parameters.environment.workingDirectory}}
 
