@@ -33,6 +33,10 @@ stages:
                 displayName: "Dummy script"
                 workingDirectory: ${{parameters.workingDirectory}}
 
+              - template: steps/app-service-build-deploy.yaml
+                parameters:
+                  environment: ${{environment}}
+
   - ${{each environment in parameters.environments}}:
       - stage: app_service_${{environment.stage}}
         condition: and(succeeded('plan'), eq(variables.isMain, 'true'))
