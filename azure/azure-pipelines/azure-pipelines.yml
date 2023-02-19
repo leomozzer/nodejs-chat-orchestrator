@@ -18,6 +18,7 @@ extends:
         serviceConnection: SC-AzureDevOps
         webAppName: "sampleapp-lso1234"
         environment: dev
+        appFolder: "$(System.DefaultWorkingDirectory)/backend"
 # stages:
 #   - stage: build
 #     displayName: Build
