@@ -23,9 +23,8 @@ stages:
             displayName: Plan ${{environment.stage}}
             steps:
               - script: |
-                  npm install
-                  npm run build --if-present
-                displayName: "npm install, build"
+                  ls -ltr
+                displayName: "Dummy script"
                 workingDirectory: ${{parameters.workingDirectory}}
               # - template: steps/terraform-plan.yaml
               #   parameters:
@@ -46,18 +45,18 @@ stages:
 #                       parameters:
 #                         environment: ${{environment}}
 
-# - ${{each environment in parameters.environments}}:
-#     - stage: app_service_${{environment.stage}}
-#       condition: and(succeeded(apply_${{environment.stage}}), eq(variables.isMain, 'true'))
-#       dependsOn: apply_${{environment.stage}}
-#       displayName: Deploy App Service ${{environment.stage}}
-#       jobs:
-#         - deployment:
-#           environment: ${{environment.environment}}
-#           strategy:
-#             runOnce:
-#               deploy:
-#                 steps:
-#                   - template: steps/app-service-build-deploy.yaml
-#                     parameters:
-#                       environment: ${{environment}}
+- ${{each environment in parameters.environments}}:
+    - stage: app_service_${{environment.stage}}
+      condition: and(succeeded(apply_${{environment.stage}}), eq(variables.isMain, 'true'))
+      dependsOn: apply_${{environment.stage}}
+      displayName: Deploy App Service ${{environment.stage}}
+      jobs:
+        - deployment:
+          environment: ${{environment.environment}}
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                  - template: steps/app-service-build-deploy.yaml
+                    parameters:
+                      environment: ${{environment}}
