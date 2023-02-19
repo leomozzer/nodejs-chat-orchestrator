@@ -12,7 +12,7 @@ import { RoomsService } from './rooms.service';
   imports: [
     MessagesModule,
     UsersModule,
-    TypeOrmModule.forFeature([Rooms, ConnectedUsers])
+    //TypeOrmModule.forFeature([Rooms, ConnectedUsers])
   ],
   controllers: [RoomsController],
   providers: [RoomsService, RoomsGateway],
