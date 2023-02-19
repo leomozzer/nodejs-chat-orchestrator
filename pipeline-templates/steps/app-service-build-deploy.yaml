@@ -15,7 +15,6 @@ steps:
       echo ${{parameters.environment.appFolder}}
       echo ${{parameters.environment.workingDirectory}}
     displayName: "Dummy script 2"
-    workingDirectory: ${{parameters.environment.workingDirectory}}
 
   # - task: NodeTool@0
   #   inputs:
