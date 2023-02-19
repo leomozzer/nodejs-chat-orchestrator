@@ -6,7 +6,7 @@ steps:
   - script: |
       ls -ltr
     displayName: "Dummy script"
-    workingDirectory: ${{parameters.workingDirectory}}
+    workingDirectory: ${{parameters.environment.workingDirectory}}
 
   - task: NodeTool@0
     inputs:
