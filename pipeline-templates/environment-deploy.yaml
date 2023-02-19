@@ -29,7 +29,7 @@ stages:
 
   - ${{each environment in parameters.environments}}:
       - stage: app_service_${{environment.stage}}
-        condition: and(succeeded(apply_${{environment.stage}}), eq(variables.isMain, 'true'))
+        condition: and(succeeded('plan'), eq(variables.isMain, 'true'))
         dependsOn: apply_${{environment.stage}}
         displayName: Deploy App Service ${{environment.stage}}
         jobs:
