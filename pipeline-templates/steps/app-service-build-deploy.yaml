@@ -1,38 +1,33 @@
 parameters:
-  - name: workingDirectory
-    type: string
-  - name: serviceConnection
-    type: string
-  - name: webAppName
-    type: string
-    
-  
+  - name: environment
+    type: object
+
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '18.x'
-    displayName: 'Install Node.js'
+      versionSpec: "18.x"
+    displayName: "Install Node.js"
 
   - script: |
       npm install
       npm run build --if-present
-    displayName: 'npm install, build'
-    workingDirectory: ${{parameters.workingDirectory}}
+    displayName: "npm install, build"
+    workingDirectory: ${{parameters.environment.workingDirectory}}
 
   - task: ArchiveFiles@2
-    displayName: 'Archive files'
+    displayName: "Archive files"
     inputs:
-      rootFolderOrFile: ${{parameters.workingDirectory}}
+      rootFolderOrFile: ${{parameters.environment.workingDirectory}}
       includeRootFolder: false
       archiveType: zip
       archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       replaceExistingArchive: true
-  
+
   - task: AzureWebApp@1
-    displayName: 'Azure Web App Deploy: sitename'
+    displayName: "Azure Web App Deploy: sitename"
     inputs:
-      azureSubscription: ${{parameters.serviceConnection}}
+      azureSubscription: ${{parameters.environment.serviceConnection}}
       appType: webAppLinux
-      appName: ${{parameters.webAppName}}
+      appName: ${{parameters.environment.webAppName}}
       package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      startUpCommand: 'pm2 start dist/main.js --no-daemon'
+      startUpCommand: "pm2 start dist/main.js --no-daemon"
