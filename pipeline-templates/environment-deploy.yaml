@@ -29,13 +29,13 @@ stages:
             displayName: Plan ${{environment.stage}}
             steps:
               - script: |
-                  ls -ltr
+                  echo "Terraform plan ;)"
                 displayName: "Dummy script"
                 workingDirectory: ${{parameters.workingDirectory}}
 
-              - template: steps/app-service-build-deploy.yaml
-                parameters:
-                  environment: ${{environment}}
+              # - template: steps/app-service-build-deploy.yaml
+              #   parameters:
+              #     environment: ${{environment}}
 
   - ${{each environment in parameters.environments}}:
       - stage: app_service_${{environment.stage}}
