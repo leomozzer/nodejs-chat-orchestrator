@@ -8,12 +8,13 @@ steps:
       echo $(terraformVersion)
       echo $(terraformFolder)
       echo $(backendAppFolder)
+      echo $(workingDirectory)
     displayName: "Dummy script 1"
 
   - script: |
       ls -ltr
     displayName: "Dummy script 2"
-    workingDirectory: $(backendAppFolder)
+    workingDirectory: $(workingDirectory)
 
   # - task: NodeTool@0
   #   inputs:

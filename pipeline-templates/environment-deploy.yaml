@@ -11,6 +11,7 @@ parameters:
     type: object
 
 variables:
+  workingDirectory: ${{parameters.workingDirectory}}
   terraformVersion: ${{parameters.terraformVersion}}
   projectName: ${{parameters.projectName}}
   backendAppFolder: ${{parameters.backendAppFolder}}
