@@ -24,7 +24,6 @@ stages:
             steps:
               - script: |
                   echo ${{parameters.workingDirectory}}
-                  echo ${{environment}}
                 displayName: "Dummy script"
                 workingDirectory: ${{parameters.workingDirectory}}
 
