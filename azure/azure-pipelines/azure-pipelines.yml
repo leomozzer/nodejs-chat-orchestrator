@@ -11,10 +11,10 @@ extends:
   parameters:
     terraformVersion: "1.3.6"
     projectName: backend
-    workingDirectory: backend
+    workingDirectory: $(System.DefaultWorkingDirectory)
     environments:
       - stage: dev
-        workingDirectory: "$(System.DefaultWorkingDirectory)"
+        workingDirectory: "$(System.DefaultWorkingDirectory)/backend"
         serviceConnection: SC-AzureDevOps
         webAppName: "sampleapp-lso1234"
         environment: dev

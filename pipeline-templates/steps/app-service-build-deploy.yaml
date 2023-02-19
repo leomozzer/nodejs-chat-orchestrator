@@ -13,6 +13,7 @@ steps:
       echo $(terraformVersion)
       echo $(workingDirectory)
       echo ${{parameters.environment.appFolder}}
+      echo ${{parameters.environment.workingDirectory}}
     displayName: "Dummy script 2"
     workingDirectory: ${{parameters.environment.workingDirectory}}
 
