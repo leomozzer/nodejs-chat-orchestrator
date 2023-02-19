@@ -14,11 +14,9 @@ extends:
     workingDirectory: backend
     environments:
       - stage: dev
-        environment: backend-dev
+        workingDirectory: "$(System.DefaultWorkingDirectory)/backend"
         serviceConnection: SC-AzureDevOps
-        resourceGroup: s-weu-dev-sample-project-rg
-        resourceGroupLocation: westeurope
-        storageAccount: sweudevsampleprojectsatf
+        webAppName: "sampleapp-lso1234"
 # stages:
 #   - stage: build
 #     displayName: Build
