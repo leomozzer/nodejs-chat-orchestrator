@@ -3,6 +3,13 @@ parameters:
     type: object
 
 steps:
+
+  steps:
+    - script: |
+        ls -ltr
+      displayName: "Dummy script"
+      workingDirectory: ${{parameters.workingDirectory}}
+
   - task: NodeTool@0
     inputs:
       versionSpec: "18.x"
