@@ -23,8 +23,7 @@ stages:
             displayName: Plan ${{environment.stage}}
             steps:
               - script: |
-                  echo ${{parameters.workingDirectory}}
-                  pwd
+                  ls -ltr
                 displayName: "Dummy script"
                 workingDirectory: ${{parameters.workingDirectory}}
 
