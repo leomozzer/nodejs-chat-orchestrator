@@ -43,18 +43,18 @@ stages:
         dependsOn: plan
         displayName: Deploy App Service ${{environment.stage}}
         jobs:
+          - deployment:
+            environment: ${{environment.environment}}
+            strategy:
+              runOnce:
+                deploy:
+                  steps:
+                    - template: steps/dummy.yaml
+                      parameters:
+                        environment: ${{environment}}
           - job: build_${{environment.stage}}
             displayName: Build ${{environment.stage}}
             steps:
               - template: steps/app-service-build-deploy.yaml
                 parameters:
                   environment: ${{environment}}
-          # - deployment:
-          #   environment: ${{environment.environment}}
-          #   strategy:
-          #     runOnce:
-          #       deploy:
-          #         steps:
-          #           - template: steps/app-service-build-deploy.yaml
-          #             parameters:
-          #               environment: ${{environment}}
