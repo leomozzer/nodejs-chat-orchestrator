@@ -10,9 +10,7 @@ extends:
   template: ../../pipeline-templates/environment-deploy.yaml
   parameters:
     terraformVersion: "1.3.6"
-    projectName: backend
-    backendAppFolder: backend
-    terraformFolder: azure
+    projectName: nodejs-chat-orchestrator
     workingDirectory: $(System.DefaultWorkingDirectory)
     environments:
       - stage: dev
@@ -20,6 +18,9 @@ extends:
         webAppName: "sampleapp-lso1234"
         environment: dev
         appDirectory: $(System.DefaultWorkingDirectory)/backend
+        resourceGroup: s-weu-dev-smart-aco-rg
+        resourceGroupLocation: eastus
+        storageAccount: smartacovnetsatf
 # stages:
 #   - stage: build
 #     displayName: Build

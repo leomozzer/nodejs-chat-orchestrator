@@ -4,20 +4,29 @@ resource "random_string" "random" {
   upper = false
 }
 
-module "skaylink-resourcegroup" {
-  source  = "skaylink/skaylink-resourcegroup/azurerm"
-  version = "1.2.0"
-  name = "${random_string.random}-rg"
-  location = var.location
-  tags = {
-    "some": "thing"
-  }
+resource "random_password" "db_root_pwd" {
+  length = 31
+  override_special = "!#$%&*-_=+:?"
 }
 
-module "app_service" {
-  source = "../terraform-modules/linux-app-service"
-  app_name = ""
-  resource_group_name = module.skaylink-resourcegroup.resource_group.name
-  location = var.location
-  sku_name = var.sku_name
+
+module "mysql_database" {
+  source = "../terraform-modules/mysql-server"
+  mysql_name = random_string.random.result
+  resource_group_name = data.azurerm_resource_group.resource_group.name
+  location = data.azurerm_resource_group.resource_group.location
+  administrator_login = "root"
+  administrator_login_password = random_password.db_root_pwd
+  sku_name = "B_Gen5_2"
+  storage_mb = 5120
+  version = "5.7"
 }
+
+
+# module "app_service" {
+#   source = "../terraform-modules/linux-app-service"
+#   app_name = ""
+#   resource_group_name = module.skaylink-resourcegroup.resource_group.name
+#   location = var.location
+#   sku_name = var.sku_name
+# }
