@@ -10,4 +10,4 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az group create -l ${{parameters.environment.resourceGroupLocation}} -n ${{parameters.environment.resourceGroup}}
+        az group create -l ${{parameters.environment.resourceGroupLocation}} -n $(projectName)-${{parameters.environment.stage}}

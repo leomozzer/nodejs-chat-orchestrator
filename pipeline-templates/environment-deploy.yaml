@@ -25,13 +25,19 @@ stages:
     displayName: Plan
     jobs:
       - ${{each environment in parameters.environments}}:
+          - job: backend_${{environment.stage}}
+            displayName: Backend ${{environment.stage}}
+            steps:
+              - template: steps/tfstate-rg.yaml
+                parameters:
+                  environment: ${{environment}}
+
           - job: plan_${{environment.stage}}
             displayName: Plan ${{environment.stage}}
             steps:
-              - script: |
-                  echo "Terraform plan ;)"
-                displayName: "Dummy script"
-                workingDirectory: ${{parameters.workingDirectory}}
+              - template: steps/environment-deploy.yaml
+                parameters:
+                  environment: ${{environment}}
 
               # - template: steps/app-service-build-deploy.yaml
               #   parameters:
