@@ -29,7 +29,7 @@ stages:
           - job: plan_${{environment.stage}}
             displayName: Plan ${{environment.stage}}
             steps:
-              - template: steps/environment-deploy.yaml
+              - template: steps/environment-rg.yaml
                 parameters:
                   environment: ${{environment}}
 
