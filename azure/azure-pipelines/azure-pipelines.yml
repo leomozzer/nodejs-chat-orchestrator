@@ -20,7 +20,7 @@ extends:
         appDirectory: $(System.DefaultWorkingDirectory)/backend
         resourceGroup: s-weu-dev-smart-aco-rg
         resourceGroupLocation: eastus
-        storageAccount: smartacovnetsatf
+        storageAccount: nodejschatorchestratordev
 # stages:
 #   - stage: build
 #     displayName: Build

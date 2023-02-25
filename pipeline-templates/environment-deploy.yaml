@@ -27,6 +27,7 @@ stages:
                   environment: ${{environment}}
 
           - job: plan_${{environment.stage}}
+            dependsOn: backend_${{environment.stage}}
             displayName: Plan ${{environment.stage}}
             steps:
               - template: steps/environment-rg.yaml
