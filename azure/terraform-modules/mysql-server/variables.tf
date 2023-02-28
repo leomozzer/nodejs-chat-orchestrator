@@ -28,7 +28,7 @@ variable "storage_mb" {
   type = number
 }
 
-variable "version" {
+variable "mysql_version" {
   type = string
 }
 
