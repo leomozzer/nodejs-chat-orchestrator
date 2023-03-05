@@ -55,7 +55,6 @@ stages:
                         environment: ${{environment}}
 
       - stage: app_service_${{environment.stage}}
-        condition: and(succeeded(apply_${{environment.stage}}), eq(variables.isMain, 'true'))
         dependsOn: apply_${{environment.stage}}
         displayName: Apply ${{environment.stage}}
         jobs:
