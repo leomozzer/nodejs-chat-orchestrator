@@ -45,15 +45,12 @@ stages:
         dependsOn: plan
         displayName: Apply ${{environment.stage}}
         jobs:
-          - deployment:
-            environment: ${{environment.environment}}
-            strategy:
-              runOnce:
-                deploy:
-                  steps:
-                    - template: steps/terraform-apply.yaml
-                      parameters:
-                        environment: ${{environment}}
+          - job: apply_${{environment.stage}}
+            displayName: Apply ${{environment.stage}}
+            steps:
+              - template: steps/terraform-apply.yaml
+                parameters:
+                  environment: ${{environment}}
 
       - stage: app_service_${{environment.stage}}
         dependsOn: apply_${{environment.stage}}
