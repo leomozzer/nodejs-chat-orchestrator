@@ -30,7 +30,7 @@ stages:
             dependsOn: backend_${{environment.stage}}
             displayName: Plan ${{environment.stage}}
             steps:
-              - template: steps/environment-rg.yaml
+              - template: steps/terraform-plan.yaml
                 parameters:
                   environment: ${{environment}}
 
@@ -39,10 +39,10 @@ stages:
               #     environment: ${{environment}}
 
   - ${{each environment in parameters.environments}}:
-      - stage: app_service_${{environment.stage}}
+      - stage: apply_${{environment.stage}}
         condition: and(succeeded('plan'), eq(variables.isMain, 'true'))
         dependsOn: plan
-        displayName: Deploy App Service ${{environment.stage}}
+        displayName: Apply ${{environment.stage}}
         jobs:
           - deployment:
             environment: ${{environment.environment}}
@@ -50,9 +50,15 @@ stages:
               runOnce:
                 deploy:
                   steps:
-                    - template: steps/dummy.yaml
+                    - template: steps/terraform-apply.yaml
                       parameters:
                         environment: ${{environment}}
+
+      - stage: app_service_${{environment.stage}}
+        condition: and(succeeded(app_service_${{environment.stage}}), eq(variables.isMain, 'true'))
+        dependsOn: app_service_${{environment.stage}}
+        displayName: Apply ${{environment.stage}}
+        jobs:
           - job: build_${{environment.stage}}
             displayName: Build ${{environment.stage}}
             steps:
