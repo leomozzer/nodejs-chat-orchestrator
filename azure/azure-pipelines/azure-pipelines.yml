@@ -17,7 +17,7 @@ extends:
         serviceConnection: SC-AzureDevOps
         webAppName: "sampleapp-lso1234"
         environment: dev
-        appDirectory: $(System.DefaultWorkingDirectory)/backend
+        backendDirectory: $(System.DefaultWorkingDirectory)/backend
         resourceGroup: s-weu-dev-smart-aco-rg
         resourceGroupLocation: eastus
         storageAccount: chatorchestratordev
