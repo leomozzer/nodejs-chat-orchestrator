@@ -24,6 +24,7 @@ steps:
   - powershell: |
       New-Item -Path "$(terraformDirectory)/terraform-live" -Name "backend.tf" -Value "terraform {`r`nbackend `"azurerm`" {}`r`n}"
       New-Item -Path "$(terraformDirectory)/terraform-live" -Name "azurerm_provider.tf" -Value "provider `"azurerm`"{`r`nskip_provider_registration = true`r`nfeatures {`r`npurge_soft_delete_on_destroy = true`nrecover_soft_deleted_key_vaults = true`r`n}`r`n}"
+      Get-ChildItem -Path "$(terraformDirectory)/terraform-live" -recurse
     displayName: Create terraform files
 
   - task: TerraformTaskV2@2
