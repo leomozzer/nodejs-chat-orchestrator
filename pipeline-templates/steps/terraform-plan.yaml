@@ -34,7 +34,7 @@ steps:
       terraformDirectory: $(terraformDirectory)/terraform-live
       backendType: azurerm
       backendServiceArm: ${{parameters.environment.serviceConnection}}
-      backendAzureRmResourceGroupName: ${{parameters.environment.resourceGroup}}
+      backendAzureRmResourceGroupName: $(projectName)-tfstate-${{parameters.environment.environment}}-rg
       backendAzureRmStorageAccountName: ${{parameters.environment.storageAccount}}
       backendAzureRmContainerName: states
       backendAzureRmKey: $(projectName).tfstate
