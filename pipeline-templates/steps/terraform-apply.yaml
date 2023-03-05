@@ -15,19 +15,31 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        mkdir terraform-live
         az storage blob download \
           --file terraform-live.tar \
           --name $(projectName)-$(Build.BuildNumber)-$(Build.BuildId)-live-${{parameters.environment.stage}}.tar \
           --account-name ${{parameters.environment.storageAccount}} \
           --container-name plans
-        tar -xvf terraform-live.tar -C terraform-live
+        tar -xvf terraform-live.tar -C $(terraformDirectory)/terraform-live
+
+  - task: TerraformTaskV2@2
+    displayName: Terraform init ${{parameters.environment.stage}}
+    inputs:
+      command: init
+      workingDirectory: $(terraformDirectory)/terraform-live
+      backendType: azurerm
+      backendServiceArm: ${{parameters.environment.serviceConnection}}
+      backendAzureRmResourceGroupName: $(projectName)-tfstate-${{parameters.environment.stage}}-rg
+      backendAzureRmStorageAccountName: ${{parameters.environment.storageAccount}}
+      backendAzureRmContainerName: states
+      backendAzureRmKey: $(projectName).tfstate
+      commandOptions: -reconfigure
 
   - task: TerraformTaskV2@2
     displayName: Terraform apply
     name: terrafromApply
     inputs:
       command: apply
-      workingDirectory: terraform-live
+      workingDirectory: $(terraformDirectory)/terraform-live
       commandOptions: -lock-timeout=10m ${{parameters.environment.stage}}.plan
       environmentServiceNameAzureRM: ${{parameters.environment.serviceConnection}}
