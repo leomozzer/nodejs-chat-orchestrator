@@ -10,7 +10,7 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az group create -l ${{parameters.environment.resourceGroupLocation}} -n $(projectName)-tfstate-rg
+        az group create -l ${{parameters.environment.resourceGroupLocation}} -n $(projectName)-tfstate-${{parameters.environment.environment}}-rg
 
   - task: AzureCLI@2
     displayName: Create backend storage for Terraform state
