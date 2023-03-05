@@ -10,6 +10,7 @@ parameters:
 
 variables:
   workingDirectory: ${{parameters.workingDirectory}}
+  terraformDirectory: ${{parameters.workingDirectory}}/azure
   terraformVersion: ${{parameters.terraformVersion}}
   projectName: ${{parameters.projectName}}
   isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
