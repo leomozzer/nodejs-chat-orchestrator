@@ -23,7 +23,7 @@ steps:
   #Workaround for https://github.com/microsoft/azure-pipelines-extensions/issues/664
   - powershell: |
       New-Item -Path "$(terraformDirectory)/terraform-live" -Name "backend.tf" -Value "terraform {`r`nbackend `"azurerm`" {}`r`n}"
-      New-Item -Path "$(terraformDirectory)/terraform-live" -Name "azurerm_provider.tf" -Value "provider `"azurerm`"{`r`nskip_provider_registration = true`r`nfeatures {`r`npurge_soft_delete_on_destroy = true`nrecover_soft_deleted_key_vaults = true`r`n}`r`n}"
+      New-Item -Path "$(terraformDirectory)/terraform-live" -Name "azurerm_provider.tf" -Value "provider `"azurerm`"{`r`nskip_provider_registration = true`r`nfeatures {}`r`n}"
     displayName: Create terraform files
 
   - script: |
