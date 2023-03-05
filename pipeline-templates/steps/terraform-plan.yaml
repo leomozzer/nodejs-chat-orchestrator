@@ -35,7 +35,7 @@ steps:
     displayName: Terraform init ${{parameters.environment.stage}}
     inputs:
       command: init
-      terraformDirectory: $(terraformDirectory)/terraform-live
+      workingDirectory: $(terraformDirectory)/terraform-live
       backendType: azurerm
       backendServiceArm: ${{parameters.environment.serviceConnection}}
       backendAzureRmResourceGroupName: $(projectName)-tfstate-${{parameters.environment.stage}}-rg
@@ -48,7 +48,7 @@ steps:
     displayName: Terraform plan ${{parameters.environment.stage}}
     inputs:
       command: plan
-      terraformDirectory: $(terraformDirectory)/terraform-live
+      workingDirectory: $(terraformDirectory)/terraform-live
       environmentServiceNameAzureRM: ${{parameters.environment.serviceConnection}}
       commandOptions: -var-file="${{parameters.environment.stage}}.tfvars" -lock=$(isMain) -lock-timeout=10m -out=${{parameters.environment.stage}}.plan
       publishPlanResults: plan
