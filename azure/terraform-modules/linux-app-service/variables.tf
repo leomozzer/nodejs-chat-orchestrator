@@ -1,11 +1,11 @@
 variable "app_name" {
   description = "App Service name"
-  type = string
+  type        = string
 }
 
 variable "resource_group_name" {
   description = "Resource group name"
-  type = string
+  type        = string
 }
 
 variable "location" {
@@ -17,11 +17,11 @@ variable "sku_name" {
 }
 
 variable "https_only" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "always_on" {
-  type = bool
+  type    = bool
   default = false
 }

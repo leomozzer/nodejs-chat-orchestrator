@@ -11,12 +11,12 @@ variable "location" {
 }
 
 variable "administrator_login" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "administrator_login_password" {
-  type = string
+  type      = string
   sensitive = true
 }
 
