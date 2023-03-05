@@ -56,7 +56,7 @@ stages:
 
       - stage: app_service_${{environment.stage}}
         dependsOn: apply_${{environment.stage}}
-        displayName: Apply ${{environment.stage}}
+        displayName: App Service ${{environment.stage}}
         jobs:
           - job: build_${{environment.stage}}
             displayName: Build ${{environment.stage}}
