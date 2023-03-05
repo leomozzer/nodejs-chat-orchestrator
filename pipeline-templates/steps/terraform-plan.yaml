@@ -26,7 +26,9 @@ steps:
       New-Item -Path "$(terraformDirectory)/terraform-live" -Name "azurerm_provider.tf" -Value "provider `"azurerm`"{`r`nskip_provider_registration = true`r`nfeatures {`r`npurge_soft_delete_on_destroy = true`nrecover_soft_deleted_key_vaults = true`r`n}`r`n}"
     displayName: Create terraform files
 
-  - script: ls -ltr
+  - script: |
+      ls -ltr
+      echo "$(projectName)-tfstate-${{parameters.environment.environment}}-rg"
     workingDirectory: $(terraformDirectory)/terraform-live
 
   - task: TerraformTaskV2@2
@@ -36,7 +38,7 @@ steps:
       terraformDirectory: $(terraformDirectory)/terraform-live
       backendType: azurerm
       backendServiceArm: ${{parameters.environment.serviceConnection}}
-      backendAzureRmResourceGroupName: $(projectName)-tfstate-${{parameters.environment.environment}}-rg
+      backendAzureRmResourceGroupName: $(projectName)-tfstate-${{parameters.environment.stage}}-rg
       backendAzureRmStorageAccountName: ${{parameters.environment.storageAccount}}
       backendAzureRmContainerName: states
       backendAzureRmKey: $(projectName).tfstate
