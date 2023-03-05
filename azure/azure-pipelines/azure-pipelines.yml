@@ -18,7 +18,7 @@ extends:
         webAppName: "sampleapp-lso1234"
         environment: dev
         backendDirectory: $(System.DefaultWorkingDirectory)/backend
-        resourceGroup: s-weu-dev-smart-aco-rg
+        resourceGroup: nodejs-chat-orchestrator-tfstate-dev-rg
         resourceGroupLocation: eastus
         storageAccount: chatorchestratordev
 # stages:
