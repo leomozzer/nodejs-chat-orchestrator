@@ -58,5 +58,5 @@ stages:
               - template: steps/app-service-build-deploy.yaml
                 parameters:
                   environment: ${{environment}}
-                  webAppName: beckend-wa
+                  webAppName: ${{environment.backendWebApp}}
                   appDirectory: ${{environment.backendDirectory}}
