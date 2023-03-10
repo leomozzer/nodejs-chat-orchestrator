@@ -35,10 +35,6 @@ stages:
                 parameters:
                   environment: ${{environment}}
 
-              # - template: steps/app-service-build-deploy.yaml
-              #   parameters:
-              #     environment: ${{environment}}
-
   - ${{each environment in parameters.environments}}:
       - stage: apply_${{environment.stage}}
         condition: and(succeeded('plan'), eq(variables.isMain, 'true'))
@@ -57,8 +53,10 @@ stages:
         displayName: App Service ${{environment.stage}}
         jobs:
           - job: build_${{environment.stage}}
-            displayName: Build ${{environment.stage}}
+            displayName: Build ${{environment.stage}} backend
             steps:
               - template: steps/app-service-build-deploy.yaml
                 parameters:
                   environment: ${{environment}}
+                  webAppName: beckend-wa
+                  appDirectory: ${{environment.backendDirectory}}
