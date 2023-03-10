@@ -1,4 +1,9 @@
-variable "app_name" {
+variable "service_plan_name" {
+  description = "Service Plan name"
+  type        = string
+}
+
+variable "web_app_name" {
   description = "App Service name"
   type        = string
 }
