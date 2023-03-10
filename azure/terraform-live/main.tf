@@ -59,9 +59,10 @@ resource "azurerm_key_vault_secret" "mysql_pwd" {
   key_vault_id = azurerm_key_vault.keyvault.id
 }
 
-module "app_service" {
+module "app_service_backend" {
   source              = "../terraform-modules/linux-app-service"
-  app_name            = random_string.random.result
+  service_plan_name = "backend-sp"
+  app_name            = "beckend-wa"
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
   sku_name            = var.sku_name
