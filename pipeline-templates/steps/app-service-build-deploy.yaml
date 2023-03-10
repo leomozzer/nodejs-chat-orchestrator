@@ -1,6 +1,10 @@
 parameters:
   - name: environment
     type: object
+  - name: webAppName
+    type: string
+  - name: appDirectory
+    type: string
 
 steps:
   - task: NodeTool@0
@@ -12,22 +16,23 @@ steps:
       npm install
       npm run build --if-present
     displayName: "npm install, build"
-    workingDirectory: ${{parameters.environment.appDirectory}}
+    workingDirectory: ${{parameters.appDirectory}}
 
   - task: ArchiveFiles@2
     displayName: "Archive files"
     inputs:
-      rootFolderOrFile: ${{parameters.environment.appDirectory}}
+      rootFolderOrFile: ${{parameters.appDirectory}}
       includeRootFolder: false
       archiveType: zip
       archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       replaceExistingArchive: true
 
   - task: AzureWebApp@1
-    displayName: "Azure Web App Deploy: ${{parameters.environment.webAppName}}"
+    retryCountOnTaskFailure: 5
+    displayName: "Azure Web App Deploy: ${{parameters.webAppName}}"
     inputs:
       azureSubscription: ${{parameters.environment.serviceConnection}}
       appType: webAppLinux
-      appName: ${{parameters.environment.webAppName}}
+      appName: ${{parameters.webAppName}}
       package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       startUpCommand: "pm2 start dist/main.js --no-daemon"
