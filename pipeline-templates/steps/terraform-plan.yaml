@@ -26,11 +26,6 @@ steps:
       New-Item -Path "$(terraformDirectory)/terraform-live" -Name "azurerm_provider.tf" -Value "provider `"azurerm`"{`r`nskip_provider_registration = true`r`nfeatures {}`r`n}"
     displayName: Create terraform files
 
-  - script: |
-      ls -ltr
-      echo "$(projectName)-tfstate-${{parameters.environment.environment}}-rg"
-    workingDirectory: $(terraformDirectory)/terraform-live
-
   - task: TerraformTaskV2@2
     displayName: Terraform init ${{parameters.environment.stage}}
     inputs:
