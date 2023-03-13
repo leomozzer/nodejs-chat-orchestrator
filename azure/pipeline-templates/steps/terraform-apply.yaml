@@ -42,6 +42,6 @@ steps:
     name: terrafromApply
     inputs:
       command: apply
-      workingDirectory: $(terraformDirectory)/terraform-live
+      workingDirectory: terraform-live
       commandOptions: -lock-timeout=10m ${{parameters.environment.stage}}.plan
       environmentServiceNameAzureRM: ${{parameters.environment.serviceConnection}}
