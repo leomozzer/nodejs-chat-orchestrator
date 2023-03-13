@@ -23,7 +23,7 @@ import { UsersModule } from './users/users.module';
       type: 'mysql',
       host: process.env.MYSQL_HOST,
       port: 3306,
-      username: 'root',
+      username: process.env.MYSQL_USER,
       password: process.env.MYSQL_ROOT_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [Rooms, Users, Chat, Messages],
