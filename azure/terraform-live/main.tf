@@ -62,7 +62,7 @@ resource "azurerm_key_vault_secret" "mysql_pwd" {
 module "app_service_backend" {
   source              = "../terraform-modules/linux-app-service"
   service_plan_name   = "backend-sp"
-  web_app_name        = "beckend-wa"
+  web_app_name        = "backend-wa"
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
   sku_name            = var.sku_name

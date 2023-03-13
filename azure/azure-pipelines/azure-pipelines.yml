@@ -15,7 +15,7 @@ extends:
     environments:
       - stage: dev
         serviceConnection: SC-AzureDevOps
-        backendWebApp: beckend-wa
+        backendWebApp: backend-wa
         environment: dev
         backendDirectory: $(System.DefaultWorkingDirectory)/backend
         resourceGroup: nodejs-chat-orchestrator-tfstate-dev-rg
