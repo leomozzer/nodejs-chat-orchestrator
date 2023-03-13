@@ -1,0 +1,13 @@
+parameters:
+  - name: environment
+    type: object
+
+steps:
+  - task: AzureCLI@2
+    displayName: Create resource group for ${{parameters.environment.stage}}
+    inputs:
+      azureSubscription: ${{parameters.environment.serviceConnection}}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az group create -l ${{parameters.environment.resourceGroupLocation}} -n $(projectName)-${{parameters.environment.stage}}-rg
