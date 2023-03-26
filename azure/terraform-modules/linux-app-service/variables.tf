@@ -32,5 +32,5 @@ variable "always_on" {
 }
 
 variable "app_settings" {
-  type = map
+  type = map(any)
 }

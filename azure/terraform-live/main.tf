@@ -71,11 +71,11 @@ module "app_service_backend" {
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
   sku_name            = var.sku_name
-  app_settings =  {
+  app_settings = {
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-    MYSQL_HOST = local.mysqlHost
-    MYSQL_DATABASE = "db"
-    MYSQL_USER = local.mysqlUser
-    MYSQL_ROOT_PASSWORD = random_password.db_root_pwd.result
+    MYSQL_HOST                          = local.mysqlHost
+    MYSQL_DATABASE                      = "db"
+    MYSQL_USER                          = local.mysqlUser
+    MYSQL_ROOT_PASSWORD                 = random_password.db_root_pwd.result
   }
 }
