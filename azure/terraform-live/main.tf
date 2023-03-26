@@ -4,6 +4,11 @@ resource "random_string" "random" {
   upper   = false
 }
 
+locals {
+  mysqlUser = "${random_string.random.result}root@${random_string.random.result}-server"
+  mysqlHost = "${random_string.random.result}-server.mysql.database.azure.com"
+}
+
 resource "random_password" "db_root_pwd" {
   length           = 31
   override_special = "!#$%&*-_=+:?"
@@ -37,7 +42,7 @@ resource "azurerm_key_vault" "keyvault" {
 
 module "mysql_database" {
   source                       = "../terraform-modules/mysql-server"
-  mysql_name                   = random_string.random.result
+  mysql_name                   = "${random_string.random.result}-server"
   resource_group_name          = azurerm_resource_group.resource_group.name
   location                     = azurerm_resource_group.resource_group.location
   administrator_login          = "${random_string.random.result}root"
@@ -49,7 +54,7 @@ module "mysql_database" {
 
 resource "azurerm_key_vault_secret" "mysql_user" {
   name         = "mysqlUser"
-  value        = "${random_string.random.result}root@${random_string.random.result}-server"
+  value        = local.mysqlUser
   key_vault_id = azurerm_key_vault.keyvault.id
 }
 
@@ -66,4 +71,11 @@ module "app_service_backend" {
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
   sku_name            = var.sku_name
+  app_settings =  {
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    MYSQL_HOST = local.mysqlHost
+    MYSQL_DATABASE = "db"
+    MYSQL_USER = local.mysqlUser
+    MYSQL_ROOT_PASSWORD = random_password.db_root_pwd.result
+  }
 }

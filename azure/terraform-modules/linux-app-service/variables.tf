@@ -30,3 +30,7 @@ variable "always_on" {
   type    = bool
   default = false
 }
+
+variable "app_settings" {
+  type = map
+}

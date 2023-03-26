@@ -19,7 +19,5 @@ resource "azurerm_linux_web_app" "web_app" {
       node_version = "18-lts"
     }
   }
-  app_settings = {
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-  }
+  app_settings = var.app_settings
 }
