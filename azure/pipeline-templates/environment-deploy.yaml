@@ -65,28 +65,28 @@ stages:
           - job: build_${{environment.stage}}
             displayName: Build ${{environment.stage}} backend
             steps:
-              - task: AzureCLI@2
-                displayName: 'Application settings backend'
-                inputs:
-                  azureSubscription: ${{environment.serviceConnection}}
-                  scriptType: 'bash'
-                  scriptLocation: 'inlineScript'
-                  inlineScript: |
-                    az webapp identity assign --resource-group $(projectName)-${{environment.environment}}-rg --name ${{environment.backendWebApp}}
-                    objectId=$(az webapp identity show --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --query principalId --output tsv)
-                    keyVault=$(az keyvault list --resource-group $(projectName)-${{environment.environment}}-rg --output tsv --query [0].name)
-                    az keyvault set-policy --name $keyVault --secret-permissions get --object-id $objectId
+              # - task: AzureCLI@2
+              #   displayName: 'Application settings backend'
+              #   inputs:
+              #     azureSubscription: ${{environment.serviceConnection}}
+              #     scriptType: 'bash'
+              #     scriptLocation: 'inlineScript'
+              #     inlineScript: |
+              #       az webapp identity assign --resource-group $(projectName)-${{environment.environment}}-rg --name ${{environment.backendWebApp}}
+              #       objectId=$(az webapp identity show --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --query principalId --output tsv)
+              #       keyVault=$(az keyvault list --resource-group $(projectName)-${{environment.environment}}-rg --output tsv --query [0].name)
+              #       az keyvault set-policy --name $keyVault --secret-permissions get --object-id $objectId
 
-                    server=$(az mysql server list --resource-group $(projectName)-${{environment.environment}}-rg --output tsv --query [0].fullyQualifiedDomainName)
-                    az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_HOST=$server
+              #       server=$(az mysql server list --resource-group $(projectName)-${{environment.environment}}-rg --output tsv --query [0].fullyQualifiedDomainName)
+              #       az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_HOST=$server
 
-                    mysqlUser=$(az keyvault secret show --name mysqlUser --vault-name $keyVault --query value)
-                    az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_USER=$mysqlUser
+              #       mysqlUser=$(az keyvault secret show --name mysqlUser --vault-name $keyVault --query value)
+              #       az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_USER=$mysqlUser
 
-                    mysqlPassword=$(az keyvault secret show --name mysqlPassword --vault-name $keyVault --query "value")
-                    az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_ROOT_PASSWORD=$mysqlPassword
+              #       mysqlPassword=$(az keyvault secret show --name mysqlPassword --vault-name $keyVault --query "value")
+              #       az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_ROOT_PASSWORD=$mysqlPassword
 
-                    az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_DATABASE=db
+              #       az webapp config appsettings set --name ${{environment.backendWebApp}} --resource-group $(projectName)-${{environment.environment}}-rg --settings MYSQL_DATABASE=db
 
               - template: steps/app-service-build-deploy.yaml
                 parameters:
