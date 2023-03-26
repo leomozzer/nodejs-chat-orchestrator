@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GatewayModule } from 'src/gateway/gateway.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Chat } from './chat/chat.entity';
@@ -14,7 +13,6 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    GatewayModule,
     ChatModule,
     RoomsModule,
     UsersModule,
