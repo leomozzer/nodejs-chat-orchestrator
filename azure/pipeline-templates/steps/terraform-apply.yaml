@@ -15,6 +15,7 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
+        mkdir terraform-live
         az storage blob download \
           --file terraform-live.tar \
           --name $(projectName)-$(Build.BuildNumber)-$(Build.BuildId)-live-${{parameters.environment.stage}}.tar \
