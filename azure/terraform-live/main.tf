@@ -34,7 +34,7 @@ resource "azurerm_key_vault" "keyvault" {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id
     secret_permissions = [
-      "Get", "Set", "Delete", "List"
+      "Get", "Set", "Delete", "List", "Recover", "Restore"
     ]
   }
 }
