@@ -49,7 +49,7 @@ module "mysql_database" {
 
 resource "azurerm_key_vault_secret" "mysql_user" {
   name         = "mysqlUser"
-  value        = "${random_string.random.result}root"
+  value        = "${random_string.random.result}root@${random_string.random.result}-server"
   key_vault_id = azurerm_key_vault.keyvault.id
 }
 

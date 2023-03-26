@@ -19,8 +19,16 @@ resource "azurerm_mysql_server" "mysql_server" {
   ssl_minimal_tls_version_enforced  = "TLS1_2"
 }
 
+resource "azurerm_mysql_firewall_rule" "example" {
+  name                = "AzureServices"
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_mysql_server.mysql_server.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
+}
+
 resource "azurerm_mysql_database" "mysql_database" {
-  name                = "${var.mysql_name}-db"
+  name                = "db"
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_server.mysql_server.name
   charset             = "utf8"
