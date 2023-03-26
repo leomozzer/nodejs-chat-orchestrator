@@ -63,7 +63,7 @@ steps:
       includeRootFolder: false
       rootFolderOrFile: $(terraformDirectory)/terraform-modules
       archiveType: tar
-      archiveFile: terraform-modules-${{ parameters.stage }}.tar
+      archiveFile: terraform-modules-${{parameters.environment.stage}}.tar
 
   - task: AzureCLI@2
     displayName: Copy ${{parameters.environment.stage}} live plan to Storage
@@ -88,6 +88,6 @@ steps:
       inlineScript: |
         az storage blob upload \
           --container-name plans \
-          --file terraform-modules-${{ parameters.stage }}.tar \
+          --file terraform-modules-${{parameters.environment.stage}}.tar \
           --name $(projectName)-$(Build.BuildNumber)-$(Build.BuildId)-modules-${{parameters.environment.stage}}.tar \
           --account-name ${{parameters.environment.storageAccount}}
