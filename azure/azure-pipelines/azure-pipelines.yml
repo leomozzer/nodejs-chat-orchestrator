@@ -22,3 +22,5 @@ extends:
         resourceGroup: nodejs-chat-orchestrator-tfstate-dev-rg
         resourceGroupLocation: eastus
         storageAccount: chatorchestratordev
+        frontendWebApp: frontend-webapp-dev
+        frontendDirectory: $(System.DefaultWorkingDirectory)/frontend

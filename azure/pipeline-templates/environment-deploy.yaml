@@ -72,4 +72,4 @@ stages:
                   environment: ${{environment}}
                   webAppName: ${{environment.backendWebApp}}
                   appDirectory: ${{environment.backendDirectory}}
-                  startUpCommand: "pm2 start dist/main.js --no-daemon"
+                  startUpCommand: "npm run start"
