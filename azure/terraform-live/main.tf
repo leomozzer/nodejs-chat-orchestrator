@@ -5,8 +5,8 @@ resource "random_string" "random" {
 }
 
 locals {
-  mysqlUser = "${random_string.random.result}root@${random_string.random.result}-server"
-  mysqlHost = "${random_string.random.result}-server.mysql.database.azure.com"
+  mysqlUser = "${random_string.random.result}root@${random_string.random.result}-mysql-server-${var.environment}"
+  mysqlHost = "${random_string.random.result}-mysql-server-${var.environment}.mysql.database.azure.com"
 }
 
 resource "random_password" "db_root_pwd" {
@@ -20,7 +20,7 @@ resource "azurerm_resource_group" "resource_group" {
 }
 
 resource "azurerm_key_vault" "keyvault" {
-  name                        = "${random_string.random.result}-kv"
+  name                        = "${random_string.random.result}-kv-${var.environment}"
   location                    = azurerm_resource_group.resource_group.location
   resource_group_name         = azurerm_resource_group.resource_group.name
   enabled_for_disk_encryption = true
@@ -42,7 +42,7 @@ resource "azurerm_key_vault" "keyvault" {
 
 module "mysql_database" {
   source                       = "../terraform-modules/mysql-server"
-  mysql_name                   = "${random_string.random.result}-server"
+  mysql_name                   = "${random_string.random.result}-mysql-server-${var.environment}"
   resource_group_name          = azurerm_resource_group.resource_group.name
   location                     = azurerm_resource_group.resource_group.location
   administrator_login          = "${random_string.random.result}root"
@@ -50,6 +50,8 @@ module "mysql_database" {
   sku_name                     = "B_Gen5_2"
   storage_mb                   = 5120
   mysql_version                = "5.7"
+  database_name                = "db"
+  allow_azure_services         = true
 }
 
 resource "azurerm_key_vault_secret" "mysql_user" {
@@ -66,8 +68,8 @@ resource "azurerm_key_vault_secret" "mysql_pwd" {
 
 module "app_service_backend" {
   source              = "../terraform-modules/linux-app-service"
-  service_plan_name   = "backend-sp"
-  web_app_name        = "backend-wa"
+  service_plan_name   = "backend-serpla-${var.environment}"
+  web_app_name        = "backend-webapp-${var.environment}"
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = azurerm_resource_group.resource_group.location
   sku_name            = var.sku_name
