@@ -15,21 +15,9 @@ extends:
     environments:
       - stage: dev
         serviceConnection: SC-AzureDevOps
-        backendWebApp: backend-wa
+        backendWebApp: backend-webapp-dev
         environment: dev
         backendDirectory: $(System.DefaultWorkingDirectory)/backend
         resourceGroup: nodejs-chat-orchestrator-tfstate-dev-rg
         resourceGroupLocation: eastus
         storageAccount: chatorchestratordev
-# stages:
-#   - stage: build
-#     displayName: Build
-#     jobs:
-#       - job: build_dev
-#         displayName: Build dev
-#         steps:
-#           - template: ../../pipeline-templates/steps/app-service-build.yaml
-#             parameters:
-#               workingDirectory: "$(System.DefaultWorkingDirectory)/backend"
-#               serviceConnection: "SC-AzureDevOps"
-#               webAppName: "sampleapp-lso1234"
