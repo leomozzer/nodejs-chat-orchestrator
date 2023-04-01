@@ -64,7 +64,7 @@ stages:
                   webAppName: ${{environment.backendWebApp}}
                   appDirectory: ${{environment.backendDirectory}}
                   startUpCommand: "pm2 start dist/main.js --no-daemon"
-                  
+
           - job: build_${{environment.stage}}
             displayName: Build ${{environment.stage}} frontend
             steps:
