@@ -46,7 +46,7 @@
                 }
             },
             created() {
-                this.socket = io(`https://backend-wa.azurewebsites.net/rooms`)
+                this.socket = io(`https://backend-webapp-dev.azurewebsites.net/rooms`)
                 //this.socket.of('/chat')
                 this.socket.on('response', (msg) => {
                     console.log(`output => ${msg}`)
