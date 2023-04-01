@@ -5,7 +5,7 @@ import { UsersService } from "src/users/users.service";
 import { v4 as uuidv4 } from 'uuid';
 import { RoomsService } from "./rooms.service";
 
-@WebSocketGateway({ namespace: '/rooms' })
+@WebSocketGateway({ namespace: '/rooms', transports: ['websocket']})
 export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     constructor(
         private readonly roomsService: RoomsService,
