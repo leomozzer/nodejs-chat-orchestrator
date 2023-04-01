@@ -55,7 +55,7 @@ stages:
         dependsOn: apply_${{environment.stage}}
         displayName: App Service ${{environment.stage}}
         jobs:
-          - job: build_${{environment.stage}}
+          - job: build_${{environment.stage}}_backend
             displayName: Build ${{environment.stage}} backend
             steps:
               - template: steps/app-service-build-deploy.yaml
@@ -65,7 +65,7 @@ stages:
                   appDirectory: ${{environment.backendDirectory}}
                   startUpCommand: "pm2 start dist/main.js --no-daemon"
 
-          - job: build_${{environment.stage}}
+          - job: build_${{environment.stage}}_frontend
             displayName: Build ${{environment.stage}} frontend
             steps:
               - template: steps/app-service-build-deploy.yaml
