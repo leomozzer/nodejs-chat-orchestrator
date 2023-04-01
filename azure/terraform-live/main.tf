@@ -81,3 +81,19 @@ module "app_service_backend" {
     MYSQL_ROOT_PASSWORD                 = random_password.db_root_pwd.result
   }
 }
+
+module "app_service_frontend" {
+  source              = "../terraform-modules/linux-app-service"
+  service_plan_name   = "frontend-serpla-${var.environment}"
+  web_app_name        = "frontend-webapp-${var.environment}"
+  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = azurerm_resource_group.resource_group.location
+  sku_name            = var.sku_name
+  app_settings = {
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    MYSQL_HOST                          = local.mysqlHost
+    MYSQL_DATABASE                      = "db"
+    MYSQL_USER                          = local.mysqlUser
+    MYSQL_ROOT_PASSWORD                 = random_password.db_root_pwd.result
+  }
+}

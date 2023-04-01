@@ -5,6 +5,8 @@ parameters:
     type: string
   - name: appDirectory
     type: string
+  - name: startUpCommand
+    type: string
 
 steps:
   - task: NodeTool@0
@@ -24,7 +26,7 @@ steps:
       rootFolderOrFile: ${{parameters.appDirectory}}
       includeRootFolder: false
       archiveType: zip
-      archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)/${{parameters.webAppName}}.zip
       replaceExistingArchive: true
 
   - task: AzureWebApp@1
@@ -34,5 +36,5 @@ steps:
       azureSubscription: ${{parameters.environment.serviceConnection}}
       appType: webAppLinux
       appName: ${{parameters.webAppName}}
-      package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      startUpCommand: "pm2 start dist/main.js --no-daemon"
+      package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)/${{parameters.webAppName}}.zip
+      startUpCommand: ${{parameters.environment.startUpCommand}}
