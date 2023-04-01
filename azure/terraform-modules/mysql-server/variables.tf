@@ -32,3 +32,11 @@ variable "mysql_version" {
   type = string
 }
 
+variable "database_name" {
+  type = string
+}
+
+variable "allow_azure_services" {
+  type    = bool
+  default = false
+}

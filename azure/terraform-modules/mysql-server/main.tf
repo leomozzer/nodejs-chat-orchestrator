@@ -20,6 +20,7 @@ resource "azurerm_mysql_server" "mysql_server" {
 }
 
 resource "azurerm_mysql_firewall_rule" "example" {
+  count               = var.allow_azure_services == true ? 1 : 0
   name                = "AzureServices"
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_server.mysql_server.name
@@ -28,7 +29,7 @@ resource "azurerm_mysql_firewall_rule" "example" {
 }
 
 resource "azurerm_mysql_database" "mysql_database" {
-  name                = "db"
+  name                = var.database_name
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_server.mysql_server.name
   charset             = "utf8"
