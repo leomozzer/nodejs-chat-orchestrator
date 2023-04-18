@@ -64,13 +64,3 @@ stages:
                   webAppName: ${{environment.backendWebApp}}
                   appDirectory: ${{environment.backendDirectory}}
                   startUpCommand: "pm2 start dist/main.js --no-daemon"
-
-          - job: build_${{environment.stage}}_frontend
-            displayName: Build ${{environment.stage}} frontend
-            steps:
-              - template: steps/app-service-build-deploy.yaml
-                parameters:
-                  environment: ${{environment}}
-                  webAppName: ${{environment.frontendWebApp}}
-                  appDirectory: ${{environment.frontendDirectory}}
-                  startUpCommand: "npm run start"
