@@ -46,8 +46,7 @@
                 }
             },
             created() {
-                this.socket = io(`http://localhost:3000/rooms`)
-                //this.socket.of('/chat')
+                this.socket = io(`https://backend-webapp.azurewebsites.net/rooms`)
                 this.socket.on('response', (msg) => {
                     console.log(`output => ${msg}`)
                     this.messages.push(msg)
