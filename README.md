@@ -90,3 +90,9 @@ export class MessagesModule {}
 [How to Deploy a NestJS Application with AWS Elastic Beanstalk and CodePipeline](https://blog.bitsrc.io/how-to-deploy-a-nestjs-application-with-aws-elastic-beanstalk-and-codepipeline-82aa98dcc48)
 
 [Websockets, Elastic Beanstalk, and Application Load Balancers - 2020 edition](https://solitaired.com/websockets-elastic-beanstalk)
+
+[Deploying a Node app to AWS Elastic Beanstalk using GitHub Actions](https://levelup.gitconnected.com/deploying-a-node-app-to-aws-elastic-beanstalk-using-github-actions-d64c7e486701)
+
+[Deploying a Node.js application to AWS Elastic Beanstalk using Github actions](https://dev.to/thesameeric/deploying-a-nodejs-application-to-aws-elastic-beanstalk-using-github-actions-26n2)
+
+[How to write Terraform Code for AWS Elastic Beanstalk Infrastructure](https://www.youtube.com/watch?v=m2XqEprF0Js&t=1s)

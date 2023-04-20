@@ -25,10 +25,7 @@ import { UsersModule } from './users/users.module';
       password: process.env.MYSQL_ROOT_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [Rooms, Users, Chat, Messages],
-      synchronize: true,
-      ssl:{
-        ca: ''
-      }
+      synchronize: true
     })
   ],
   controllers: [AppController],
