@@ -89,7 +89,7 @@ runs:
   - name: Upload terraform-live and plan to S3
     shell: bash
     run: |
-      aws s3 cp ${{ inputs.WORKING_DIR }}/terraform-live/terraform-live-${{ inputs.STAGE }}.tar s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}.tar
+      aws s3 cp ${{ inputs.WORKING_DIR }}/terraform-live/terraform-live-${{ inputs.STAGE }}.tar s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
@@ -108,7 +108,7 @@ runs:
   - name: Upload terraform-modules to S3
     shell: bash
     run: |
-      aws s3 cp ${{ inputs.WORKING_DIR }}/terraform-modules/terraform-modules-${{ inputs.STAGE }}.tar s3://$BUCKET_TF_STATE/plans/terraform-modules-${{ inputs.STAGE }}.tar
+      aws s3 cp ${{ inputs.WORKING_DIR }}/terraform-modules/terraform-modules-${{ inputs.STAGE }}.tar s3://$BUCKET_TF_STATE/plans/terraform-modules-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
