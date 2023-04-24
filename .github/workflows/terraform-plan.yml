@@ -9,9 +9,9 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   #AWS defaul region
-  AWS_DEFAULT_REGION: "us-east-1"
+  AWS_DEFAULT_REGION: us-east-1
   # S3 bucket for the Terraform state
-  BUCKET_TF_STATE: "nodejs-chat-orchestrator-tfstate-s3"
+  BUCKET_TF_STATE: nodejs-chat-orchestrator-tfstate-s3
 
 jobs:
   terraform:
