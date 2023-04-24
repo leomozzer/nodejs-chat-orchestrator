@@ -25,6 +25,9 @@ inputs:
   STAGE:
     description: "Running stage"
     required: true
+  WORKING_DIR:
+    description: "Terraform working directory"
+    required: true
 
 runs:
   using: "composite"
@@ -55,17 +58,20 @@ runs:
     shell: bash
     id: fmt
     run: terraform fmt -check
+    working-directory: ${{ inputs.WORKING_DIR }}
 
   - name: Terraform init
     shell: bash
     id: init
     run: terraform init -backend-config="bucket=$BUCKET_TF_STATE" -backend-config="key=states/terraform.tfstate"
+    working-directory: ${{ inputs.WORKING_DIR }}
 
   - name: Terraform Plan
     shell: bash
     id: plan
     run: terraform plan -var-file="${{ inputs.STAGE }}.tfvars" -lock-timeout=10m -out=${{ inputs.STAGE }}.plan
     continue-on-error: false
+    working-directory: ${{ inputs.WORKING_DIR }}
 
   - uses: actions/checkout@master
 
