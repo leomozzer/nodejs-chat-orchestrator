@@ -72,7 +72,7 @@ runs:
     id: plan
     run: terraform plan -var-file="${{ inputs.STAGE }}.tfvars" -lock-timeout=10m -out=${{ inputs.STAGE }}.plan
     continue-on-error: false
-    working-directory: ${{ inputs.WORKING_DIR }}
+    working-directory: ${{ inputs.WORKING_DIR }}/terraform-live
 
   - uses: actions/checkout@master
 
