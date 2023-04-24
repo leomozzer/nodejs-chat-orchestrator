@@ -35,6 +35,11 @@ runs:
   - name: Upload to S3
     shell: bash
     run: |
+      ls -ltr
+
+  - name: Upload to S3
+    shell: bash
+    run: |
       aws s3 mb s3://$BUCKET_TF_STATE
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
