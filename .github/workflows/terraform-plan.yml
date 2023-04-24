@@ -65,11 +65,10 @@ jobs:
         cwd: ./aws
         files: |
           ./terraform-live
-        outPath: ./terraform-live-dev.tar
+        outPath: ./aws/terraform-live/terraform-live-dev.tar
 
     - name: Upload terraform-live and plan to S3
       run: |
-        cd ..
         ls -ltr
         aws s3 cp ./terraform-live-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-live-dev.tar
       env:
