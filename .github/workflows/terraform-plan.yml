@@ -69,6 +69,7 @@ jobs:
 
     - name: Upload terraform-live and plan to S3
       run: |
+        ls -ltr
         aws s3 cp ./terraform-live-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-live-dev.tar
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
