@@ -30,8 +30,6 @@ jobs:
     - name: Upload to S3
       run: |
         aws s3 mb s3://$BUCKET_TF_STATE
-        aws s3api put-object --bucket $BUCKET_TF_STATE --key states
-        aws s3api put-object --bucket $BUCKET_TF_STATE --key plans
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -71,6 +69,25 @@ jobs:
       run: |
         ls -ltr
         aws s3 cp ./terraform-live-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-live-dev.tar
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+
+    - name: Archive terraform-modules
+      uses: a7ul/tar-action@v1.1.0
+      id: compress
+      with:
+        command: c
+        cwd: ./aws
+        files: |
+          ./terraform-modules
+        outPath: ./aws/terraform-modules/terraform-modules-dev.tar
+
+    - name: Upload terraform-modules to S3
+      run: |
+        ls -ltr
+        aws s3 cp ./terraform-modules-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-modules-dev.tar
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
