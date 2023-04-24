@@ -52,9 +52,9 @@ runs:
       aws s3 cp s3://${{ inputs.BUCKET_TF_STATE }}/plans/terraform-modules-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-modules.tar
       tar -xvf terraform-modules.tar -C ./
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
 
   - name: Terraform Apply
     shell: bash
