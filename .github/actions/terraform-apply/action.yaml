@@ -40,7 +40,6 @@ runs:
   - name: Copy ${{ inputs.STAGE }} plan from S3 
     shell: bash
     run: |
-      mkdir terraform-live
       aws s3 cp s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-live.tar
       tar -xvf terraform-live.tar -C terraform-live
     env:
@@ -51,7 +50,6 @@ runs:
   - name: Copy ${{ inputs.STAGE }} mdoules from S3 
     shell: bash
     run: |
-      mkdir terraform-modules
       aws s3 cp s3://$BUCKET_TF_STATE/plans/terraform-modules-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-modules.tar
       tar -xvf terraform-modules.tar -C terraform-modules
     env:
