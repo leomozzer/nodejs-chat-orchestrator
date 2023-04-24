@@ -10,8 +10,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   #AWS defaul region
   AWS_DEFAULT_REGION: us-east-1
-  # S3 bucket for the Terraform state
-  BUCKET_TF_STATE: nodejs-chat-orchestrator-tfstate-s3
 
 jobs:
   plan:
@@ -35,8 +33,6 @@ jobs:
     #     STAGE: ${{ matrix.stage }}
     - uses: "./.github/actions/terraform-plan"
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         BUCKET_TF_STATE: s3-nodejs-chat-orchestrator-tfstate-${{ matrix.stage }}
         STAGE: ${{ matrix.stage }}
         WORKING_DIR: ./aws
@@ -55,7 +51,5 @@ jobs:
     - uses: actions/checkout@v3
     - uses: "./.github/actions/terraform-apply"
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         BUCKET_TF_STATE: s3-nodejs-chat-orchestrator-tfstate-${{ matrix.stage }}
         STAGE: ${{ matrix.stage }}
