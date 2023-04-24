@@ -38,4 +38,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         BUCKET_TF_STATE: s3-nodejs-chat-orchestrator-tfstate-${{ matrix.stage }}
         STAGE: ${{ matrix.stage }}
-        WORKING_DIR: ./aws/terraform-live
+        WORKING_DIR: ./aws
