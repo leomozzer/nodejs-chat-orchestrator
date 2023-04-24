@@ -18,6 +18,7 @@ jobs:
     strategy:
       matrix:
         target: [dev, stage, prod]
-    uses: ./.github/actions/showstage
+    uses: "./.github/actions/showstage"
     with:
+      version: v1.0.0
       target: ${{ matrix.target }}

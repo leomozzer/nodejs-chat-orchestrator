@@ -1,6 +1,8 @@
 name: "List Dir"
 
 inputs:
+  version: 
+    required: true
   STAGE: 
     description: "Current state"
     required: true
