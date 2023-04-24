@@ -19,7 +19,6 @@ jobs:
       matrix:
         stage: [dev, prod]
     runs-on: ubuntu-latest
-    environment: ${{ matrix.stage }}
     defaults:
      run:
        shell: bash
