@@ -35,10 +35,11 @@ runs:
   - name: Checkout
     uses: actions/checkout@v3
 
-  - name: Upload to S3
+  - name: ls
     shell: bash
     run: |
       ls -ltr
+    working-directory: ${{ inputs.WORKING_DIR }}/terraform-live
 
   - name: Upload to S3
     shell: bash
