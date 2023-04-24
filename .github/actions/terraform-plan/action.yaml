@@ -2,19 +2,6 @@ name: 'Terraform Plan'
 description: "Performs the terraform plan"
 
 inputs:
- # Credentials for deployment to AWS
-  AWS_ACCESS_KEY_ID:
-    description: "AWS access key"
-    required: true
-  AWS_SECRET_ACCESS_KEY: 
-    description: "AWS secret key"
-    required: true
-  #AWS defaul region
-  AWS_DEFAULT_REGION:
-    description: "AWS secret key"
-    required: false
-    default: us-east-1
-  # S3 bucket for the Terraform state
   BUCKET_TF_STATE: 
     description: "S3 bucket for the Terraform state"
     required: true
