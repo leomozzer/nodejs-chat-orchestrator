@@ -82,7 +82,7 @@ runs:
       command: c
       cwd: ${{ inputs.WORKING_DIR }}
       files: |
-        ./terraform-live
+        ./
       outPath: ${{ inputs.WORKING_DIR }}/terraform-live-${{ inputs.STAGE }}.tar
 
   - name: Upload terraform-live and plan to S3
