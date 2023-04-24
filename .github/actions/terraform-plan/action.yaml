@@ -74,8 +74,6 @@ runs:
     continue-on-error: false
     working-directory: ${{ inputs.WORKING_DIR }}/terraform-live
 
-  - uses: actions/checkout@master
-
   - name: Archive terraform-live and plan
     uses: a7ul/tar-action@v1.1.0
     id: compress-terraform-live
