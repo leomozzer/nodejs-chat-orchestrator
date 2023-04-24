@@ -24,3 +24,6 @@ jobs:
     - uses: "./.github/template/deploy/action.yaml"
       with:
         STAGE: ${{ matrix.target }}
+    - uses: "./.github/actions/deploy"
+      with:
+        STAGE: ${{ matrix.target }}
