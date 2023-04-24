@@ -21,7 +21,7 @@ jobs:
      run:
        shell: bash
        # We keep Terraform files in the terraform directory.
-       working-directory: .aws/terraform-live
+       working-directory: aws/terraform-live
 
     steps:
     - name: Checkout
