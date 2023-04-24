@@ -19,6 +19,11 @@ jobs:
       matrix:
         stage: [dev, prod]
     runs-on: ubuntu-latest
+    defaults:
+     run:
+       shell: bash
+       # We keep Terraform files in the terraform directory.
+       working-directory: aws/terraform-live
     steps:
     - uses: actions/checkout@v3
     # - uses: "./.github/template/deploy/action.yaml"
