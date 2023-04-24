@@ -32,7 +32,7 @@ locals {
 # }
 
 resource "aws_iam_role" "ec2_role" {
-  name               = "${var.app_name}-ec2-role"
+  name               = "${var.app_name}-ec2-role-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.assume_policy.json
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier",
@@ -49,7 +49,7 @@ resource "aws_iam_role" "ec2_role" {
 
 # Create instance profile
 resource "aws_iam_instance_profile" "ec2_eb_profile" {
-  name = "${var.app_name}-ec2-profile"
+  name = "${var.app_name}-ec2-profile-${var.environment}"
   role = aws_iam_role.ec2_role.name
 }
 
