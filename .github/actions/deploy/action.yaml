@@ -9,5 +9,6 @@ runs:
   using: "composite"
   steps:
     - name: List dir
+      shell: bash
       run: |
         echo ${{ inputs.STAGE }}
