@@ -62,7 +62,7 @@ jobs:
       id: compress
       with:
         command: c
-        cwd: ./
+        cwd: ./aws
         files: |
           ./terraform-live
         outPath: ./terraform-live-dev.tar
