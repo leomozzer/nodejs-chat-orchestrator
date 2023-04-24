@@ -40,9 +40,8 @@ runs:
   - name: Copy ${{ inputs.STAGE }} plan from S3 
     shell: bash
     run: |
-      mkdir terraform-live
       aws s3 cp s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-live.tar
-      tar -xvf terraform-live.tar -C terraform-live
+      tar -xvf terraform-live.tar -C ./
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
@@ -51,9 +50,8 @@ runs:
   - name: Copy ${{ inputs.STAGE }} mdoules from S3 
     shell: bash
     run: |
-      mkdir terraform-modules
       aws s3 cp s3://$BUCKET_TF_STATE/plans/terraform-modules-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-modules.tar
-      tar -xvf terraform-modules.tar -C terraform-modules
+      tar -xvf terraform-modules.tar -C ./
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
@@ -63,4 +61,4 @@ runs:
     shell: bash
     run: 
       ls -ltr
-    working-directory: ./terraform-live/terraform-live
+    working-directory: ./terraform-live
