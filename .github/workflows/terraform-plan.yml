@@ -27,68 +27,68 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Upload to S3
-      run: |
-        aws s3 mb s3://$BUCKET_TF_STATE
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+    # - name: Upload to S3
+    #   run: |
+    #     aws s3 mb s3://$BUCKET_TF_STATE
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
       
-    - name: Setup Terraform with specified version on the runner
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.3.0
+    # - name: Setup Terraform with specified version on the runner
+    #   uses: hashicorp/setup-terraform@v2
+    #   with:
+    #     terraform_version: 1.3.0
 
-    - name: Terraform format
-      id: fmt
-      run: terraform fmt -check
+    # - name: Terraform format
+    #   id: fmt
+    #   run: terraform fmt -check
 
-    - name: Terraform init
-      id: init
-      run: terraform init -backend-config="bucket=$BUCKET_TF_STATE" -backend-config="key=states/terraform.tfstate"
+    # - name: Terraform init
+    #   id: init
+    #   run: terraform init -backend-config="bucket=$BUCKET_TF_STATE" -backend-config="key=states/terraform.tfstate"
 
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -var-file="dev.tfvars" -lock-timeout=10m -out=dev.plan
-      continue-on-error: true
+    # - name: Terraform Plan
+    #   id: plan
+    #   run: terraform plan -var-file="dev.tfvars" -lock-timeout=10m -out=dev.plan
+    #   continue-on-error: true
 
-    - uses: actions/checkout@master
+    # - uses: actions/checkout@master
 
-    - name: Archive terraform-live and plan
-      uses: a7ul/tar-action@v1.1.0
-      id: compress-terraform-live
-      with:
-        command: c
-        cwd: ./aws
-        files: |
-          ./terraform-live
-        outPath: ./aws/terraform-live/terraform-live-dev.tar
+    # - name: Archive terraform-live and plan
+    #   uses: a7ul/tar-action@v1.1.0
+    #   id: compress-terraform-live
+    #   with:
+    #     command: c
+    #     cwd: ./aws
+    #     files: |
+    #       ./terraform-live
+    #     outPath: ./aws/terraform-live/terraform-live-dev.tar
 
-    - name: Upload terraform-live and plan to S3
-      run: |
-        ls -ltr
-        aws s3 cp ./terraform-live-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-live-dev.tar
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+    # - name: Upload terraform-live and plan to S3
+    #   run: |
+    #     ls -ltr
+    #     aws s3 cp ./terraform-live-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-live-dev.tar
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
 
-    - name: Archive terraform-modules
-      uses: a7ul/tar-action@v1.1.0
-      id: compress-terraform-modules
-      with:
-        command: c
-        cwd: ./aws
-        files: |
-          ./terraform-modules
-        outPath: ./aws/terraform-modules/terraform-modules-dev.tar
+    # - name: Archive terraform-modules
+    #   uses: a7ul/tar-action@v1.1.0
+    #   id: compress-terraform-modules
+    #   with:
+    #     command: c
+    #     cwd: ./aws
+    #     files: |
+    #       ./terraform-modules
+    #     outPath: ./aws/terraform-modules/terraform-modules-dev.tar
 
-    - name: Upload terraform-modules to S3
-      run: |
-        ls -ltr
-        aws s3 cp ./terraform-modules-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-modules-dev.tar
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
+    # - name: Upload terraform-modules to S3
+    #   run: |
+    #     ls -ltr
+    #     aws s3 cp ./terraform-modules-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-modules-dev.tar
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}

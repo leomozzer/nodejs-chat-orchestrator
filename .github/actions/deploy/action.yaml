@@ -1,4 +1,5 @@
 name: "List Dir"
+description: "List dir command"
 
 inputs:
   STAGE: 
