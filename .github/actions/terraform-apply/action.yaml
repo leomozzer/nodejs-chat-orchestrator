@@ -41,7 +41,7 @@ runs:
     shell: bash
     run: |
       mkdir terraform-live
-      aws s3 cp terraform-live-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-live.tar
+      aws s3 cp s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-live.tar
       tar -xvf terraform-live.tar -C terraform-live
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
@@ -52,7 +52,7 @@ runs:
     shell: bash
     run: |
       mkdir terraform-modules
-      aws s3 cp terraform-modules-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-modules.tar
+      aws s3 cp s3://$BUCKET_TF_STATE/plans/terraform-modules-${{ inputs.STAGE }}-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ID.tar terraform-modules.tar
       tar -xvf terraform-modules.tar -C terraform-modules
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
