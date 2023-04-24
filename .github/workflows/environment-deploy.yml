@@ -21,9 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: "./.github/template/deploy/action.yaml"
-      with:
-        STAGE: ${{ matrix.target }}
+    # - uses: "./.github/template/deploy/action.yaml"
+    #   with:
+    #     STAGE: ${{ matrix.target }}
     - uses: "./.github/actions/deploy"
       with:
         STAGE: ${{ matrix.target }}
