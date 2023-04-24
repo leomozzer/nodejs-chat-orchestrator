@@ -90,7 +90,7 @@ runs:
     shell: bash
     run: |
       ls -ltr
-      aws s3 cp ${{ inputs.WORKING_DIR }}/terraform-live-${{ inputs.STAGE }}.tar s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}.tar
+      aws s3 cp ${{ inputs.WORKING_DIR }}/terraform-live/terraform-live-${{ inputs.STAGE }}.tar s3://$BUCKET_TF_STATE/plans/terraform-live-${{ inputs.STAGE }}.tar
     env:
       AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
