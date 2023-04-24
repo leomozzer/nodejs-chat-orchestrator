@@ -60,5 +60,5 @@ runs:
   - name: Terraform Apply
     shell: bash
     run: 
-      ls -ltr
+      terraform apply -lock-timeout=10m "${{ inputs.STAGE }}.plan"
     working-directory: ./terraform-live
