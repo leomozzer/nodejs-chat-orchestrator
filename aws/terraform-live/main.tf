@@ -31,30 +31,6 @@ locals {
 #   rds_publicly_accessible           = true
 # }
 
-data "aws_iam_policy_document" "assume_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-  }
-}
-
-data "aws_iam_policy_document" "permissions" {
-  statement {
-    actions = [
-      "cloudwatch:PutMetricData",
-      "ec2:DescribeInstanceStatus",
-      "ssm:*",
-      "ec2messages:*",
-      "s3:*",
-      "sqs:*"
-    ]
-    resources = ["*"]
-  }
-}
-
 resource "aws_iam_role" "ec2_role" {
   name               = "${var.app_name}-ec2-role"
   assume_role_policy = data.aws_iam_policy_document.assume_policy.json
@@ -77,26 +53,26 @@ resource "aws_iam_instance_profile" "ec2_eb_profile" {
   role = aws_iam_role.ec2_role.name
 }
 
-module "elastic_beanstalk_backend" {
-  source = "../terraform-modules/elastic-beanstalk"
-  depends_on = [
-    aws_iam_instance_profile.ec2_eb_profile
-  ]
-  elastic_beanstalk_application_name = "${var.app_name}-${var.environment}-eb-app"
-  elastic_beanstalk_environment_name = "${var.app_name}-${var.environment}-eb-env"
-  tier                               = "WebServer"
-  wait_for_ready_timeout             = "20m"
-  solution_stack_name                = "64bit Amazon Linux 2 v5.8.0 running Node.js 18"
-  settings = {
-    "IamInstanceProfile" = {
-      namespace = "aws:autoscaling:launchconfiguration"
-      name      = "IamInstanceProfile"
-      value     = "${aws_iam_instance_profile.ec2_eb_profile.name}"
-    }
-    "InstanceType" = {
-      namespace = "aws:autoscaling:launchconfiguration"
-      name      = "InstanceType"
-      value     = "t2.micro"
-    }
-  }
-}
+# module "elastic_beanstalk_backend" {
+#   source = "../terraform-modules/elastic-beanstalk"
+#   depends_on = [
+#     aws_iam_instance_profile.ec2_eb_profile
+#   ]
+#   elastic_beanstalk_application_name = "${var.app_name}-${var.environment}-eb-app"
+#   elastic_beanstalk_environment_name = "${var.app_name}-${var.environment}-eb-env"
+#   tier                               = "WebServer"
+#   wait_for_ready_timeout             = "20m"
+#   solution_stack_name                = "64bit Amazon Linux 2 v5.8.0 running Node.js 18"
+#   settings = {
+#     "IamInstanceProfile" = {
+#       namespace = "aws:autoscaling:launchconfiguration"
+#       name      = "IamInstanceProfile"
+#       value     = "${aws_iam_instance_profile.ec2_eb_profile.name}"
+#     }
+#     "InstanceType" = {
+#       namespace = "aws:autoscaling:launchconfiguration"
+#       name      = "InstanceType"
+#       value     = "t2.micro"
+#     }
+#   }
+# }
