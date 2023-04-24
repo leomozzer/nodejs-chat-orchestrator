@@ -48,9 +48,29 @@ jobs:
 
     - name: Terraform init
       id: init
-      run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
+      run: terraform init -backend-config="bucket=$BUCKET_TF_STATE" -backend-config="key=states/terraform.tfstate"
 
     - name: Terraform Plan
       id: plan
       run: terraform plan -var-file="dev.tfvars" -lock-timeout=10m -out=dev.plan
       continue-on-error: true
+
+    - uses: actions/checkout@master
+
+    - name: Archive terraform-live and plan
+      uses: a7ul/tar-action@v1.1.0
+      id: compress
+      with:
+        command: c
+        cwd: ./
+        files: |
+          ./terraform-live
+        outPath: ./terraform-live-dev.tar
+
+    - name: Upload terraform-live and plan to S3
+      run: |
+        aws s3 cp terraform-live-dev.tar s3://$BUCKET_TF_STATE/plans/terraform-live-dev.tar
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_DEFAULT_REGION }}
