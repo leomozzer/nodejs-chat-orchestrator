@@ -25,6 +25,7 @@ jobs:
        shell: bash
        # We keep Terraform files in the terraform directory.
        working-directory: aws/terraform-live
+    concurrency: ${{ matrix.stage }}
     steps:
     - uses: actions/checkout@v3
     # - uses: "./.github/template/deploy/action.yaml"
@@ -41,6 +42,18 @@ jobs:
         STAGE: ${{ matrix.stage }}
         WORKING_DIR: ./aws
 
+  apply:
+    needs: plan
+    strategy:
+      matrix:
+        stage: [dev, prod]
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.stage }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v3
     - uses: "./.github/actions/terraform-apply"
       with:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
