@@ -14,23 +14,10 @@ env:
   BUCKET_TF_STATE: nodejs-chat-orchestrator-tfstate-s3
 
 jobs:
-  plan:
-    name: "Terraform Plan"
-    runs-on: ubuntu-latest
-    defaults:
-     run:
-       shell: bash
-    steps:
-    - name: LS
-      run: |
-        ls -ltr
-  apply:
-    name: "Terraform Apply"
-    runs-on: ubuntu-latest
-    defaults:
-     run:
-       shell: bash
-    steps:
-    - name: LS
-      run: |
-        ls -ltr
+  ReuseableMatrixJobForDeployment:
+    strategy:
+      matrix:
+        target: [dev, stage, prod]
+    uses: ./.github/actions/showstage
+    with:
+      target: ${{ matrix.target }}
