@@ -17,7 +17,7 @@ jobs:
   plan:
     strategy:
       matrix:
-        stage: [dev, stage, prod]
+        stage: [dev, prod]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
