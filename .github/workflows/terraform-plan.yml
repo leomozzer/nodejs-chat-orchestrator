@@ -57,7 +57,7 @@ jobs:
 
     - name: Archive terraform-live and plan
       uses: a7ul/tar-action@v1.1.0
-      id: compress
+      id: compress-terraform-live
       with:
         command: c
         cwd: ./aws
@@ -76,7 +76,7 @@ jobs:
 
     - name: Archive terraform-modules
       uses: a7ul/tar-action@v1.1.0
-      id: compress
+      id: compress-terraform-modules
       with:
         command: c
         cwd: ./aws
