@@ -2,6 +2,17 @@
 
 Nest app to orchestrate messages with chatbots and creating chat rooms with users
 
+## Kubernetes
+
+- kind create cluster --name "kluster"
+- kubectl apply -f bases/mysql/
+- kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
+- create database db;
+- kind load docker-image backend --name "kluster"
+- kubectl apply -f bases/nestjs/
+- kubectl logs backend-7468769f76-8jzzf
+- kubectl port-forward services/backend 3000:80
+
 ## ToDo
 
 - Database with TypeOrm
